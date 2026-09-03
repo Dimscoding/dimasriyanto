@@ -28,26 +28,34 @@ const journey = [
   {
     number: "01",
     icon: Printer,
-    title: "Print Production",
-    label: "Fondasi desain",
-    text: "Terbiasa merancang materi visual yang bukan hanya menarik, tetapi juga siap masuk proses produksi percetakan.",
-    points: ["Layout siap cetak", "Media promosi", "Finishing awareness"],
+    title: "Graphic Designer",
+    label: "Digiprint Lombok · Jun 2025–Jun 2026",
+    text: "Merancang dan memproduksi materi visual untuk kebutuhan cetak dan digital sambil berkolaborasi langsung dengan klien.",
+    points: ["Banner & paper", "Merchandise", "Acrylic design"],
   },
   {
     number: "02",
     icon: MonitorSmartphone,
-    title: "Digital Visual",
-    label: "Eksplorasi modern",
-    text: "Mengembangkan bahasa visual untuk kebutuhan branding, konten digital, kampanye, dan tampilan web.",
-    points: ["Brand direction", "Social content", "Digital campaign"],
+    title: "Media & Network",
+    label: "HMPS Sosiologi Agama · Jul 2023–Feb 2024",
+    text: "Memimpin divisi media dan jaringan, mengelola komunikasi organisasi, konten sosial, serta relasi internal dan eksternal.",
+    points: ["Social media", "Communication", "Team coordination"],
   },
   {
     number: "03",
-    icon: Bot,
-    title: "AI Creative",
-    label: "Workflow berkembang",
-    text: "Memanfaatkan AI sebagai partner eksplorasi untuk mempercepat ide, visualisasi, dan proses kreatif.",
-    points: ["Image generation", "Creative ideation", "Smart workflow"],
+    icon: PenTool,
+    title: "Digital Content Writer",
+    label: "Rarang Batas Village Website · Jul–Aug 2024",
+    text: "Menulis dan mempublikasikan kegiatan KKP, termasuk program digitalisasi desa dan peningkatan pelayanan publik melalui OpenSID.",
+    points: ["Article writing", "Digital literacy", "Web publishing"],
+  },
+  {
+    number: "04",
+    icon: Palette,
+    title: "Campus Visual Contribution",
+    label: "UIN Mataram · 2021–2025",
+    text: "Lulus S1 Sosiologi Agama sekaligus dipercaya membuat materi komunikasi visual untuk berbagai kegiatan akademik.",
+    points: ["Academic banners", "Event flyers", "Visual communication"],
   },
 ];
 
@@ -312,15 +320,20 @@ export default function Home() {
             </div>
             <div className="about-copy card-frame">
               <p>
-                Saya bergerak dari dunia desain grafis percetakan, tempat setiap detail
-                harus siap diwujudkan menjadi hasil fisik yang nyata. Pengalaman itu
-                membentuk cara saya menyusun visual: jelas, terukur, dan punya fungsi.
+                Saya adalah lulusan S1 Sosiologi Agama UIN Mataram dengan pengalaman
+                profesional sebagai graphic designer di industri percetakan dan
+                periklanan. Pengalaman produksi membentuk cara saya menyusun visual:
+                jelas, terukur, dan siap diwujudkan.
               </p>
               <p>
-                Kini proses tersebut berkembang ke media digital dan pemanfaatan AI.
-                Bukan untuk menggantikan kreativitas, tetapi untuk membuka kemungkinan
-                baru dan membuat proses eksplorasi menjadi lebih luas.
+                Saya memanfaatkan teknologi AI sebagai bagian dari workflow kreatif
+                untuk mempercepat eksplorasi ide dan meningkatkan kualitas visual,
+                didukung pengalaman di bidang media, komunikasi, serta literasi digital.
               </p>
+              <div className="profile-facts">
+                <div><span>Education</span><b>S1 Sosiologi Agama</b><small>UIN Mataram · 2021–2025</small></div>
+                <div><span>Based in</span><b>Mataram, NTB</b><small>Available for creative work</small></div>
+              </div>
             </div>
           </div>
 
@@ -340,8 +353,8 @@ export default function Home() {
           </div>
 
           <div className="journey-intro">
-            <h2>ONE FOUNDATION.<br /><em>THREE DIRECTIONS.</em></h2>
-            <p>Perjalanan yang berkembang tanpa meninggalkan pemahaman dasar tentang desain yang benar-benar digunakan.</p>
+            <h2>REAL EXPERIENCE.<br /><em>CREATIVE DIRECTION.</em></h2>
+            <p>Perjalanan dari komunikasi, media, dan pendidikan menuju desain grafis yang dekat dengan kebutuhan nyata.</p>
           </div>
 
           <div className="journey-list">
@@ -367,8 +380,13 @@ export default function Home() {
           <div className="toolbelt">
             <span>TOOLS & WORKFLOW</span>
             <div>
-              <b>Adobe Photoshop</b><b>CorelDRAW</b><b>Canva</b><b>ChatGPT</b><b>Image Generation</b>
+              <b>CorelDRAW</b><b>Canva</b><b>Microsoft Office</b><b>ChatGPT</b><b>AI Image Tools</b><b>Print Production</b>
             </div>
+          </div>
+
+          <div className="additional-experience">
+            <article><span>JAN 2023–MAY 2025</span><strong>Yayasan Taajul Huffaz</strong><p>Part-time Quran teacher for students aged 7–15.</p></article>
+            <article><span>OCT–NOV 2024</span><strong>BNN Kota Mataram</strong><p>Internship supporting public outreach, administration, and program documentation.</p></article>
           </div>
         </div>
       </section>
@@ -427,8 +445,15 @@ export default function Home() {
               <p className="redline">Have a project in mind?</p>
               <h2>LET&apos;S MAKE<br /><em>SOMETHING<br />MEMORABLE.</em></h2>
               <p>Ceritakan kebutuhan desainmu—untuk percetakan, digital, branding, atau eksplorasi kreatif dengan AI.</p>
-              <div className="social-preview" aria-label="Kanal kontak yang dapat ditambahkan">
-                <span><Mail size={21} /></span><span><Camera size={21} /></span><span><Send size={21} /></span>
+              <div className="social-preview" aria-label="Kanal kontak Dimas Riyanto">
+                <a href="mailto:dimsrynto09@gmail.com" aria-label="Kirim email ke Dimas" title="Email"><Mail size={21} /></a>
+                <a href="https://www.instagram.com/aaadimm09" target="_blank" rel="noreferrer" aria-label="Buka Instagram Dimas" title="Instagram"><Camera size={21} /></a>
+                <a href="https://wa.me/6281996993639" target="_blank" rel="noreferrer" aria-label="Hubungi Dimas melalui WhatsApp" title="WhatsApp"><Send size={21} /></a>
+              </div>
+              <div className="direct-contact">
+                <a href="mailto:dimsrynto09@gmail.com"><span>Email</span><b>dimsrynto09@gmail.com</b></a>
+                <a href="https://wa.me/6281996993639" target="_blank" rel="noreferrer"><span>WhatsApp</span><b>+62 819-9699-3639</b></a>
+                <a href="https://www.instagram.com/aaadimm09" target="_blank" rel="noreferrer"><span>Instagram</span><b>@aaadimm09</b></a>
               </div>
             </div>
 

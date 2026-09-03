@@ -4,6 +4,8 @@ Website portofolio personal untuk graphic designer dengan fokus pada desain perc
 
 Versi terbaru mencakup opening animation 0–100%, kinetic typography, hero dengan motion bergaya organic glow, serta indikator persentase scroll yang responsif di desktop dan handphone.
 
+Tipografi memakai Syne Variable untuk judul dan Space Grotesk Variable untuk teks antarmuka serta paragraf. Kedua font disimpan sebagai dependency project agar tampil konsisten di semua perangkat.
+
 ## Menjalankan di komputer
 
 Pastikan Node.js versi 20.9 atau lebih baru sudah terpasang.
