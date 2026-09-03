@@ -7,9 +7,11 @@ import {
   ArrowUpRight,
   Bot,
   Check,
+  ChevronLeft,
   ChevronRight,
   Download,
   FileText,
+  Images,
   Layers3,
   Menu,
   MonitorSmartphone,
@@ -33,6 +35,90 @@ const displayHeading = (text: string) =>
     </Fragment>
   ));
 
+type GalleryKey = "print" | "brand" | "ai" | "digitalWriter" | "bnn" | "uin";
+
+type GalleryItem = {
+  src: string;
+  title: string;
+  alt: string;
+};
+
+type Gallery = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: GalleryItem[];
+};
+
+const galleries: Record<GalleryKey, Gallery> = {
+  print: {
+    eyebrow: "Print & Production",
+    title: "Designed to Become Real.",
+    description: "Pilihan desain untuk kebutuhan cetak, publikasi, acara, dan komunikasi informasi.",
+    items: [
+      { src: "/assets/galleries/print/nusantara-trans.webp", title: "Nusantara Trans Schedule", alt: "Desain banner jadwal keberangkatan Nusantara Trans" },
+      { src: "/assets/galleries/print/plafon-pvc.webp", title: "PVC & Interior Promotion", alt: "Kumpulan desain banner promosi distributor plafon PVC" },
+      { src: "/assets/galleries/print/academic-cover-tradisi.webp", title: "Tradisi - Academic Cover", alt: "Desain sampul akademik bertema tradisi Perang Api" },
+      { src: "/assets/galleries/print/academic-cover-stratifikasi.webp", title: "Stratifikasi Sosial - Academic Cover", alt: "Desain sampul akademik bertema stratifikasi sosial" },
+      { src: "/assets/galleries/print/kajian-remaja-frame.webp", title: "Kajian Remaja Frame", alt: "Desain bingkai dokumentasi Kajian Remaja" },
+      { src: "/assets/galleries/print/maulid-nabi-banner.webp", title: "Maulid Nabi Banner", alt: "Desain banner peringatan Maulid Nabi" },
+      { src: "/assets/galleries/print/belia-chio-menu.webp", title: "Belia Chio Menu", alt: "Desain menu lipat Belia Chio" },
+      { src: "/assets/galleries/print/graduation-banner.webp", title: "Graduation Celebration", alt: "Desain banner ucapan kelulusan" },
+      { src: "/assets/galleries/print/wisuda-route.webp", title: "Wisuda Route Poster", alt: "Desain poster rute menuju lokasi wisuda" },
+      { src: "/assets/galleries/print/eid-mubarak-frame.webp", title: "Eid Mubarak Frame", alt: "Desain bingkai foto Idulfitri" },
+    ],
+  },
+  brand: {
+    eyebrow: "Brand & Social",
+    title: "Brands Made Visible.",
+    description: "Konten promosi dan identitas visual yang dirancang untuk tampil konsisten di ruang digital.",
+    items: [
+      { src: "/assets/galleries/brand/tofu-fruit-campaign.webp", title: "Tofu Fruit Campaign", alt: "Rangkaian desain konten promosi Tofu Fruit" },
+      { src: "/assets/galleries/brand/beverage-menu.webp", title: "Beverage Menu Visual", alt: "Desain promosi beberapa varian minuman" },
+      { src: "/assets/galleries/brand/harokah-promo.webp", title: "Harokah Coffee Promo", alt: "Desain promosi produk Harokah Coffee" },
+      { src: "/assets/galleries/brand/saleh-bay-identity.webp", title: "Saleh Bay Whale Sharks", alt: "Desain identitas promosi Saleh Bay Whale Sharks" },
+    ],
+  },
+  ai: {
+    eyebrow: "AI Exploration",
+    title: "Ideas Beyond the Ordinary.",
+    description: "Eksplorasi visual komposit untuk produk dan campaign sebagai bagian dari workflow kreatif berbantuan AI.",
+    items: [
+      { src: "/assets/galleries/ai/coffee-series.webp", title: "Coffee Series Visual", alt: "Eksplorasi visual produk Coffee Series" },
+      { src: "/assets/galleries/ai/matcha-product-visual.webp", title: "Matcha Product Visual", alt: "Eksplorasi visual produk iced matcha latte" },
+      { src: "/assets/galleries/ai/kopsu-product-visual.webp", title: "KOPSU Campaign Visual", alt: "Eksplorasi visual campaign produk KOPSU" },
+      { src: "/assets/galleries/ai/whale-shark-composite.webp", title: "Whale Shark Tour Composite", alt: "Eksplorasi komposit promosi Daily Whale Shark Tour" },
+    ],
+  },
+  digitalWriter: {
+    eyebrow: "Digital Content Writer",
+    title: "Rarang Batas Documentation.",
+    description: "Dokumentasi kegiatan lapangan selama kontribusi artikel dan program literasi digital Desa Rarang Batas.",
+    items: [
+      { src: "/assets/galleries/journey/digital-writer-01.webp", title: "Rarang Batas Village Office", alt: "Dokumentasi kegiatan di Kantor Desa Rarang Batas" },
+      { src: "/assets/galleries/journey/digital-writer-02.webp", title: "Community Field Activity", alt: "Dokumentasi kegiatan lapangan bersama tim di Desa Rarang Batas" },
+    ],
+  },
+  bnn: {
+    eyebrow: "Internship Documentation",
+    title: "BNN Kota Mataram.",
+    description: "Dokumentasi selama pelaksanaan magang atau PKL di BNN Kota Mataram.",
+    items: [
+      { src: "/assets/galleries/journey/bnn-01.webp", title: "Internship Activity", alt: "Dokumentasi kegiatan magang di BNN Kota Mataram" },
+      { src: "/assets/galleries/journey/bnn-02.webp", title: "BNN Kota Mataram Team", alt: "Dokumentasi bersama tim BNN Kota Mataram" },
+    ],
+  },
+  uin: {
+    eyebrow: "Education Documentation",
+    title: "UIN Mataram, 2021-2025.",
+    description: "Momen perjalanan pendidikan S1 Sosiologi Agama di UIN Mataram.",
+    items: [
+      { src: "/assets/galleries/journey/uin-01.webp", title: "Graduation Moment", alt: "Dokumentasi momen kelulusan di UIN Mataram" },
+      { src: "/assets/galleries/journey/uin-02.webp", title: "UIN Mataram", alt: "Dokumentasi pendidikan Dimas Riyanto di UIN Mataram" },
+    ],
+  },
+};
+
 const journey = [
   {
     number: "01",
@@ -42,6 +128,7 @@ const journey = [
     text: "Merancang dan memproduksi materi visual untuk kebutuhan cetak dan digital sambil berkolaborasi langsung dengan klien.",
     points: ["Banner & paper", "Merchandise", "Acrylic design"],
     href: "",
+    gallery: undefined,
   },
   {
     number: "02",
@@ -51,6 +138,7 @@ const journey = [
     text: "Memimpin divisi media dan jaringan, mengelola komunikasi organisasi, konten sosial, serta relasi internal dan eksternal.",
     points: ["Social media", "Communication", "Team coordination"],
     href: "",
+    gallery: undefined,
   },
   {
     number: "03",
@@ -60,6 +148,7 @@ const journey = [
     text: "Article contribution published on Rarang Batas Village Website, membahas digitalisasi desa dan peningkatan kualitas pelayanan publik.",
     points: ["Article writing", "Digital literacy", "Web publishing"],
     href: "https://desararangbatas.web.id/artikel/2024/07/18/digitalisasi-desa-pelatihan-peningkatan-kualitas-pelayanan-publik",
+    gallery: "digitalWriter" as GalleryKey,
   },
   {
     number: "04",
@@ -69,6 +158,7 @@ const journey = [
     text: "Lulus S1 Sosiologi Agama sekaligus dipercaya membuat materi komunikasi visual untuk berbagai kegiatan akademik.",
     points: ["Academic banners", "Event flyers", "Visual communication"],
     href: "",
+    gallery: "uin" as GalleryKey,
   },
 ];
 
@@ -82,6 +172,8 @@ export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [skipIntro, setSkipIntro] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
+  const [activeGallery, setActiveGallery] = useState<GalleryKey | null>(null);
+  const [activeImage, setActiveImage] = useState(0);
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorFollowerRef = useRef<HTMLDivElement>(null);
 
@@ -123,20 +215,32 @@ export default function Home() {
   }, [skipIntro]);
 
   useEffect(() => {
-    if (!cvOpen) return;
+    if (!cvOpen && !activeGallery) return;
 
     const originalOverflow = document.body.style.overflow;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setCvOpen(false);
+    const handleModalKeyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setCvOpen(false);
+        setActiveGallery(null);
+      }
+      if (!activeGallery) return;
+
+      const itemCount = galleries[activeGallery].items.length;
+      if (event.key === "ArrowLeft") {
+        setActiveImage((current) => (current - 1 + itemCount) % itemCount);
+      }
+      if (event.key === "ArrowRight") {
+        setActiveImage((current) => (current + 1) % itemCount);
+      }
     };
 
     document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", handleModalKeyboard);
     return () => {
       document.body.style.overflow = originalOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("keydown", handleModalKeyboard);
     };
-  }, [cvOpen]);
+  }, [cvOpen, activeGallery]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -245,6 +349,19 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const openGallery = (gallery: GalleryKey) => {
+    setActiveImage(0);
+    setActiveGallery(gallery);
+  };
+
+  const closeGallery = () => setActiveGallery(null);
+
+  const changeGalleryImage = (direction: number) => {
+    if (!activeGallery) return;
+    const itemCount = galleries[activeGallery].items.length;
+    setActiveImage((current) => (current + direction + itemCount) % itemCount);
+  };
+
   const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -274,6 +391,7 @@ export default function Home() {
     { lead: "Print. Digital.", accent: "AI Creative." },
     { lead: "Welcome to", accent: "My Portfolio." },
   ];
+  const currentGallery = activeGallery ? galleries[activeGallery] : null;
 
   return (
     <>
@@ -323,6 +441,57 @@ export default function Home() {
             <div className="cv-modal-actions">
               <a href="/assets/cv-dimas-riyanto-2026.pdf" target="_blank" rel="noreferrer">Open PDF <ArrowUpRight size={17} /></a>
               <a href="/assets/cv-dimas-riyanto-2026.pdf" download>Download CV <Download size={17} /></a>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {currentGallery && (
+        <div className="gallery-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && closeGallery()}>
+          <section className="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-modal-title">
+            <div className="gallery-modal-head">
+              <div>
+                <span>{currentGallery.eyebrow}</span>
+                <h2 id="gallery-modal-title">{currentGallery.title}</h2>
+                <p>{currentGallery.description}</p>
+              </div>
+              <button onClick={closeGallery} aria-label="Tutup galeri"><X /></button>
+            </div>
+
+            <div className="gallery-stage">
+              <button className="gallery-arrow gallery-arrow-prev" onClick={() => changeGalleryImage(-1)} aria-label="Gambar sebelumnya">
+                <ChevronLeft />
+              </button>
+              <figure aria-live="polite">
+                <img
+                  src={currentGallery.items[activeImage].src}
+                  alt={currentGallery.items[activeImage].alt}
+                  width="1800"
+                  height="1800"
+                />
+                <figcaption>
+                  <strong>{currentGallery.items[activeImage].title}</strong>
+                  <span>{String(activeImage + 1).padStart(2, "0")} / {String(currentGallery.items.length).padStart(2, "0")}</span>
+                </figcaption>
+              </figure>
+              <button className="gallery-arrow gallery-arrow-next" onClick={() => changeGalleryImage(1)} aria-label="Gambar berikutnya">
+                <ChevronRight />
+              </button>
+            </div>
+
+            <div className="gallery-thumbnails" aria-label="Pilih karya">
+              {currentGallery.items.map((item, index) => (
+                <button
+                  key={item.src}
+                  className={index === activeImage ? "is-active" : ""}
+                  onClick={() => setActiveImage(index)}
+                  aria-label={`Lihat ${item.title}`}
+                  aria-current={index === activeImage ? "true" : undefined}
+                >
+                  <img src={item.src} alt="" width="180" height="130" loading="lazy" />
+                  <span>{item.title}</span>
+                </button>
+              ))}
             </div>
           </section>
         </div>
@@ -488,6 +657,11 @@ export default function Home() {
                         Read Published Article <ArrowUpRight size={16} />
                       </a>
                     )}
+                    {item.gallery && (
+                      <button className="journey-gallery-link" onClick={() => openGallery(item.gallery)}>
+                        <Images size={16} /> View Documentation
+                      </button>
+                    )}
                   </div>
                   <ul>
                     {item.points.map((point) => <li key={point}><Check size={14} /> {point}</li>)}
@@ -506,7 +680,14 @@ export default function Home() {
 
           <div className="additional-experience">
             <article><span>JAN 2023–MAY 2025</span><strong>Yayasan Taajul Huffaz</strong><p>Part-time Quran teacher for students aged 7–15.</p></article>
-            <article><span>OCT–NOV 2024</span><strong>BNN Kota Mataram</strong><p>Internship supporting public outreach, administration, and program documentation.</p></article>
+            <article>
+              <span>OCT–NOV 2024</span>
+              <strong>BNN Kota Mataram</strong>
+              <p>Internship supporting public outreach, administration, and program documentation.</p>
+              <button className="journey-gallery-link" onClick={() => openGallery("bnn")}>
+                <Images size={16} /> View Documentation
+              </button>
+            </article>
           </div>
         </div>
       </section>
@@ -524,21 +705,30 @@ export default function Home() {
               <h2>Projects Built<br />From Real Needs.</h2>
             </div>
             <p>
-              Tekan folder untuk melihat kelompok proyek. Karya asli dapat dimasukkan
-              ke tiap kategori saat materi portofolio sudah siap.
+              Tekan folder, lalu pilih kategori untuk membuka galeri karya.
+              Setiap visual ditampilkan lengkap dan dapat dijelajahi satu per satu.
             </p>
           </div>
 
           <div className={folderOpen ? "archive is-open" : "archive"}>
-            <div className="archive-card archive-print">
-              <div><Printer /><span>01</span></div><h3>Print <span className="heading-symbol">&amp;</span> Production</h3><p>Banner, packaging, sticker, menu, dan kebutuhan promosi.</p>
-            </div>
-            <div className="archive-card archive-brand">
-              <div><Palette /><span>02</span></div><h3>Brand <span className="heading-symbol">&amp;</span> Social</h3><p>Identitas visual, konten sosial, dan campaign design.</p>
-            </div>
-            <div className="archive-card archive-ai">
-              <div><Bot /><span>03</span></div><h3>AI Exploration</h3><p>Generative image, visual concept, dan smart workflow.</p>
-            </div>
+            <button className="archive-card archive-print" onClick={() => openGallery("print")} disabled={!folderOpen}>
+              <span className="archive-card-head"><Printer /><span>10 WORKS</span></span>
+              <span className="archive-card-title">Print <span className="heading-symbol">&amp;</span> Production</span>
+              <span className="archive-card-copy">Banner, publication, menu, dan kebutuhan promosi cetak.</span>
+              <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
+            </button>
+            <button className="archive-card archive-brand" onClick={() => openGallery("brand")} disabled={!folderOpen}>
+              <span className="archive-card-head"><Palette /><span>04 WORKS</span></span>
+              <span className="archive-card-title">Brand <span className="heading-symbol">&amp;</span> Social</span>
+              <span className="archive-card-copy">Identitas visual, konten sosial, dan campaign design.</span>
+              <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
+            </button>
+            <button className="archive-card archive-ai" onClick={() => openGallery("ai")} disabled={!folderOpen}>
+              <span className="archive-card-head"><Bot /><span>04 WORKS</span></span>
+              <span className="archive-card-title">AI Exploration</span>
+              <span className="archive-card-copy">Product visual, creative compositing, dan AI-assisted workflow.</span>
+              <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
+            </button>
 
             <button
               className="folder-button"

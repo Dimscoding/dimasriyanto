@@ -2,7 +2,7 @@
 
 Website portofolio personal untuk graphic designer dengan fokus pada desain percetakan, visual digital, dan creative workflow berbasis AI. Project ini sudah menggunakan Next.js standar dan siap disimpan di GitHub lalu di-deploy melalui Vercel.
 
-Versi terbaru mencakup opening animation sekitar 8 detik dengan tombol skip, kinetic typography, hero dengan motion bergaya organic glow, indikator persentase scroll, preview CV, dan custom cursor yang responsif di desktop maupun handphone.
+Versi terbaru mencakup opening animation sekitar 8 detik dengan tombol skip, kinetic typography, hero dengan motion bergaya organic glow, indikator persentase scroll, preview CV, custom cursor, serta galeri karya dan dokumentasi yang responsif di desktop maupun handphone.
 
 Tipografi memakai Christmas Comeback untuk heading, Syne Variable untuk elemen antarmuka, dan Space Grotesk Variable untuk paragraf. Font heading serta CV sudah disimpan di folder `public/` agar tampil konsisten di semua perangkat.
 
@@ -55,6 +55,15 @@ Setelah terhubung, setiap perubahan yang di-push ke branch `main` akan otomatis 
 - `public/fonts/` — font heading Christmas Comeback.
 
 Untuk mengganti gambar folder proyek, masukkan file baru ke `public/assets/`, lalu ubah alamat gambar pada `app/page.tsx`.
+
+## Galeri karya dan dokumentasi
+
+- `public/assets/galleries/print/` - karya Print & Production.
+- `public/assets/galleries/brand/` - karya Brand & Social.
+- `public/assets/galleries/ai/` - karya AI Exploration.
+- `public/assets/galleries/journey/` - dokumentasi Digital Content Writer, BNN Kota Mataram, dan UIN Mataram.
+
+Semua gambar galeri sudah diubah ke WebP dan dioptimalkan agar tetap tajam tanpa membuat halaman terlalu berat.
 
 ## Form kontak WhatsApp
 
