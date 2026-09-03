@@ -2,6 +2,8 @@
 
 Website portofolio personal untuk graphic designer dengan fokus pada desain percetakan, visual digital, dan creative workflow berbasis AI. Project ini sudah menggunakan Next.js standar dan siap disimpan di GitHub lalu di-deploy melalui Vercel.
 
+Versi terbaru mencakup opening animation 0–100%, kinetic typography, hero dengan motion bergaya organic glow, serta indikator persentase scroll yang responsif di desktop dan handphone.
+
 ## Menjalankan di komputer
 
 Pastikan Node.js versi 20.9 atau lebih baru sudah terpasang.
@@ -51,9 +53,16 @@ Setelah terhubung, setiap perubahan yang di-push ke branch `main` akan otomatis 
 
 Untuk mengganti gambar folder proyek, masukkan file baru ke `public/assets/`, lalu ubah alamat gambar pada `app/page.tsx`.
 
-## Catatan form kontak
+## Form kontak Supabase
 
-Form kontak saat ini adalah preview interaktif dan belum mengirim pesan ke email atau WhatsApp. Setelah alamat kontak publik ditentukan, form dapat dihubungkan ke email service, Formspree, Resend, atau diarahkan ke WhatsApp.
+Form kontak menyimpan pesan ke tabel `contact_messages` di Supabase. Tambahkan kedua Environment Variables berikut di Vercel untuk Production, Preview, dan Development:
+
+```text
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+```
+
+Kode juga mendukung nama key lama `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Jangan pernah menggunakan secret key atau service-role key di variabel yang memakai awalan `NEXT_PUBLIC_`.
 
 ## Build production
 

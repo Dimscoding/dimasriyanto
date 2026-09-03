@@ -20,6 +20,7 @@ import {
   WandSparkles,
   X,
 } from "lucide-react";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 const sections = ["home", "about", "journey", "projects", "contact"];
 
@@ -55,6 +56,64 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [folderOpen, setFolderOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [introPhase, setIntroPhase] = useState<"loading" | "exit" | "done">("loading");
+  const [introProgress, setIntroProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIntroProgress(100);
+      setIntroPhase("done");
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const startTime = performance.now();
+    let animationFrame = 0;
+    let finishTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const animateIntro = (currentTime: number) => {
+      const progress = Math.min(100, ((currentTime - startTime) / 3000) * 100);
+      setIntroProgress(progress);
+
+      if (progress < 100) {
+        animationFrame = requestAnimationFrame(animateIntro);
+      } else {
+        setIntroPhase("exit");
+        finishTimer = setTimeout(() => {
+          setIntroPhase("done");
+          document.body.style.overflow = originalOverflow;
+        }, 850);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animateIntro);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      if (finishTimer) clearTimeout(finishTimer);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateScrollProgress = () => {
+      const availableScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = availableScroll > 0 ? (window.scrollY / availableScroll) * 100 : 0;
+      setScrollProgress(Math.min(100, Math.max(0, progress)));
+    };
+
+    updateScrollProgress();
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollProgress);
+      window.removeEventListener("resize", updateScrollProgress);
+    };
+  }, []);
 
   useEffect(() => {
     const elements = sections
@@ -82,13 +141,74 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setFormStatus("Preview form sudah bekerja. Email atau WhatsApp tujuan akan disambungkan setelah kontak final ditambahkan.");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const supabase = getSupabaseBrowserClient();
+
+    if (!supabase) {
+      setFormStatus("Koneksi Supabase belum ditemukan. Periksa Environment Variables di Vercel.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormStatus("Mengirim pesan...");
+
+    const { error } = await supabase.from("contact_messages").insert({
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+    });
+
+    if (error) {
+      console.error("Supabase contact error:", error.message);
+      setFormStatus("Pesan belum berhasil dikirim. Silakan coba kembali beberapa saat lagi.");
+    } else {
+      form.reset();
+      setFormStatus("Pesan berhasil dikirim. Terima kasih sudah menghubungi saya!");
+    }
+
+    setIsSubmitting(false);
   };
 
+  const introStage = introProgress < 34 ? 0 : introProgress < 68 ? 1 : 2;
+  const introMessages = [
+    { lead: "EVERYTHING STARTS", accent: "WITH AN IDEA." },
+    { lead: "PRINT. DIGITAL.", accent: "AI CREATIVE." },
+    { lead: "WELCOME TO", accent: "MY PORTFOLIO." },
+  ];
+
   return (
-    <main className="site-shell">
+    <>
+      {introPhase !== "done" && (
+        <div className={`intro-overlay ${introPhase === "exit" ? "is-exiting" : ""}`}>
+          <div className="intro-aurora intro-aurora-one" />
+          <div className="intro-aurora intro-aurora-two" />
+          <div className="intro-orbit intro-orbit-one"><i /></div>
+          <div className="intro-orbit intro-orbit-two"><i /></div>
+          <div className="intro-message" key={introStage}>
+            <span>{introMessages[introStage].lead}</span>
+            <strong>{introMessages[introStage].accent}</strong>
+          </div>
+          <div className="intro-loader">
+            <div className="intro-loader-meta">
+              <span>Preparing creative experience</span>
+              <b>{String(Math.round(introProgress)).padStart(3, "0")}%</b>
+            </div>
+            <div className="intro-loader-track">
+              <i style={{ width: `${introProgress}%` }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="scroll-progress" aria-hidden="true">
+        <i style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+        <b>{String(Math.round(scrollProgress)).padStart(3, "0")}%</b>
+      </div>
+
+      <main className="site-shell">
       <div className="site-noise" aria-hidden="true" />
 
       <header className="navbar">
@@ -126,11 +246,11 @@ export default function Home() {
       <section id="home" className="page-section hero-section is-visible">
         <div className="hero-grid section-inner reveal-block">
           <div className="hero-content">
-            <div className="section-tag"><Sparkles size={15} /> Portfolio / 2026</div>
+            <div className="section-tag"><Sparkles size={15} /> Everything starts with an idea</div>
             <h1>
-              DESIGN THAT
-              <span>WORKS <em>BEYOND</em></span>
-              THE SCREEN.
+              TURNING
+              <span>IDEAS</span>
+              INTO <em>EXPERIENCES.</em>
             </h1>
             <p className="hero-intro">
               Saya Dimas Riyanto—graphic designer dengan fondasi percetakan,
@@ -147,6 +267,8 @@ export default function Home() {
           </div>
 
           <div className="hero-visual" aria-label="Identitas visual Dimas Riyanto">
+            <div className="hero-aurora hero-aurora-one" aria-hidden="true" />
+            <div className="hero-aurora hero-aurora-two" aria-hidden="true" />
             <div className="orbit orbit-one" aria-hidden="true" />
             <div className="orbit orbit-two" aria-hidden="true" />
             <div className="identity-card">
@@ -165,6 +287,9 @@ export default function Home() {
             <div className="float-tool tool-ai"><WandSparkles /></div>
             <span className="float-label label-print">PRINT READY</span>
             <span className="float-label label-ai">AI ENABLED</span>
+            <span className="motion-word word-idea">IDEA</span>
+            <span className="motion-word word-sketch">SKETCH</span>
+            <span className="motion-word word-impact">IMPACT</span>
           </div>
         </div>
 
@@ -320,7 +445,9 @@ export default function Home() {
                 Your message
                 <textarea name="message" placeholder="Ceritakan proyek yang ingin dibuat..." rows={6} required />
               </label>
-              <button type="submit">Prepare message <Send size={19} /></button>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send message"} <Send size={19} />
+              </button>
               {formStatus && <p className="form-status" role="status">{formStatus}</p>}
             </form>
           </div>
@@ -331,6 +458,7 @@ export default function Home() {
         <div><span>DR.</span><p>Dimas Riyanto — Graphic Designer & AI Creative</p></div>
         <button onClick={() => goTo("home")}>Back to top <ArrowUp size={17} /></button>
       </footer>
-    </main>
+      </main>
+    </>
   );
 }
