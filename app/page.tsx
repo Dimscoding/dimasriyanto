@@ -140,7 +140,6 @@ const journey = [
     points: ["Banner & paper", "Merchandise", "Acrylic design"],
     href: "",
     gallery: undefined,
-    thesis: undefined,
   },
   {
     number: "02",
@@ -151,7 +150,6 @@ const journey = [
     points: ["Social media", "Communication", "Team coordination"],
     href: "",
     gallery: undefined,
-    thesis: undefined,
   },
   {
     number: "03",
@@ -162,18 +160,6 @@ const journey = [
     points: ["Article writing", "Digital literacy", "Web publishing"],
     href: "https://desararangbatas.web.id/artikel/2024/07/18/digitalisasi-desa-pelatihan-peningkatan-kualitas-pelayanan-publik",
     gallery: "digitalWriter" as GalleryKey,
-    thesis: undefined,
-  },
-  {
-    number: "04",
-    icon: Palette,
-    title: "Campus Visual Contribution",
-    label: "UIN Mataram · 2021–2025",
-    text: "Lulus S1 Sosiologi Agama sekaligus dipercaya membuat materi komunikasi visual untuk berbagai kegiatan akademik.",
-    points: ["Academic banners", "Event flyers", "Visual communication"],
-    href: "",
-    gallery: "uin" as GalleryKey,
-    thesis,
   },
 ];
 
@@ -644,7 +630,12 @@ export default function Home() {
                 didukung pengalaman di bidang media, komunikasi, serta literasi digital.
               </p>
               <div className="profile-facts">
-                <div><span>Education</span><b>S1 Sosiologi Agama</b><small>UIN Mataram · 2021–2025</small></div>
+                <button className="education-fact" onClick={() => openGallery("uin")} aria-label="Buka dokumentasi pendidikan UIN Mataram">
+                  <span>Education</span>
+                  <b>S1 Sosiologi Agama</b>
+                  <small>UIN Mataram · 2021–2025</small>
+                  <em><Images size={14} /> View Education</em>
+                </button>
                 <div><span>Based in</span><b>Mataram, NTB</b><small>Available for creative work</small></div>
               </div>
             </div>
@@ -690,13 +681,6 @@ export default function Home() {
                       <button className="journey-gallery-link" onClick={() => openGallery(item.gallery)}>
                         <Images size={16} /> View Documentation
                       </button>
-                    )}
-                    {item.thesis && (
-                      <a className="journey-thesis" href={item.thesis.href} target="_blank" rel="noreferrer">
-                        <small>{item.thesis.label}</small>
-                        <span>{item.thesis.title}</span>
-                        <b>Read Thesis <ArrowUpRight size={14} /></b>
-                      </a>
                     )}
                   </div>
                   <ul>

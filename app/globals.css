@@ -200,10 +200,15 @@ h1, h2, h3, .boxed-title { font-family: var(--font-display); font-weight: 400; }
 .about-copy p { margin: 0; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.8; }
 .about-copy p + p { margin-top: 23px; }
 .profile-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 30px; padding-top: 27px; border-top: 2px solid var(--black-line); }
-.profile-facts div { display: flex; flex-direction: column; gap: 5px; }
+.profile-facts > div, .profile-facts > button { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.profile-facts > button { border: 0; padding: 0; background: transparent; color: inherit; text-align: left; }
 .profile-facts span { color: #6b7267; font-size: 10px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
 .profile-facts b { font-family: var(--font-ui); font-size: 16px; }
 .profile-facts small { color: #555c52; font-size: 12px; }
+.education-fact { cursor: pointer; }
+.education-fact em { display: flex; align-items: center; gap: 6px; width: fit-content; margin-top: 7px; border-bottom: 1px solid var(--lime-dark); padding-bottom: 2px; color: #5d8300; font-size: 10px; font-style: normal; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; transition: color .2s ease, transform .2s ease; }
+.education-fact:hover em, .education-fact:focus-visible em { color: #3d5900; transform: translateX(3px); }
+.education-fact:focus-visible { outline: 2px solid var(--lime-dark); outline-offset: 7px; }
 .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 72px; }
 .value-grid article { position: relative; min-height: 230px; border: 2px solid var(--black-line); padding: 25px; background: var(--white); box-shadow: 7px 7px 0 var(--black-line); transition: transform .25s ease, box-shadow .25s ease; }
 .value-grid article:hover { transform: translateY(-7px); box-shadow: 11px 14px 0 var(--lime-dark); }
@@ -230,11 +235,6 @@ h1, h2, h3, .boxed-title { font-family: var(--font-display); font-weight: 400; }
 .journey-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .journey-gallery-link { display: inline-flex; align-items: center; gap: 7px; width: fit-content; margin-top: 11px; border: 1px solid rgba(184,255,0,.38); border-radius: 999px; padding: 8px 11px; background: rgba(184,255,0,.08); color: var(--lime); font-size: 11px; font-weight: 800; letter-spacing: .04em; cursor: pointer; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
 .journey-gallery-link:hover { border-color: var(--lime); background: rgba(184,255,0,.16); transform: translateY(-2px); }
-.journey-thesis { display: grid; gap: 5px; max-width: 610px; margin-top: 13px; border-left: 3px solid var(--lime); padding: 10px 12px; background: rgba(184,255,0,.055); color: var(--white); text-decoration: none; transition: background .2s ease, transform .2s ease; }
-.journey-thesis:hover { background: rgba(184,255,0,.1); transform: translateX(3px); }
-.journey-thesis small { color: var(--lime); font-size: 9px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
-.journey-thesis span { font-size: 13px; font-weight: 650; line-height: 1.4; }
-.journey-thesis b { display: flex; align-items: center; gap: 5px; color: #cbd3c5; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
 .journey-card ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .journey-card li { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 7px 10px; color: #c0c6ba; font-size: 12px; }
 .journey-card li svg { color: var(--lime); }
