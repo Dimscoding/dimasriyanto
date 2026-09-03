@@ -28,10 +28,9 @@ import { SiGmail } from "react-icons/si";
 const sections = ["home", "about", "journey", "projects", "contact"];
 
 const displayHeading = (text: string) =>
-  text.split("&").map((part, index) => (
+  text.split(/([&0-9–-]+)/).filter(Boolean).map((part, index) => (
     <Fragment key={`${part}-${index}`}>
-      {index > 0 && <span className="heading-symbol">&amp;</span>}
-      {part}
+      {/^[&0-9–-]+$/.test(part) ? <span className="heading-symbol">{part}</span> : part}
     </Fragment>
   ));
 
@@ -452,7 +451,7 @@ export default function Home() {
             <div className="gallery-modal-head">
               <div>
                 <span>{currentGallery.eyebrow}</span>
-                <h2 id="gallery-modal-title">{currentGallery.title}</h2>
+                <h2 id="gallery-modal-title">{displayHeading(currentGallery.title)}</h2>
                 <p>{currentGallery.description}</p>
               </div>
               <button onClick={closeGallery} aria-label="Tutup galeri"><X /></button>
@@ -568,6 +567,13 @@ export default function Home() {
                 <span>CREATIVE ID</span><b>№ 001</b>
               </div>
               <div className="identity-mark">DR<span>.</span></div>
+              <img
+                className="identity-photo"
+                src="/assets/dimas-profile.webp"
+                alt="Dimas Riyanto"
+                width="900"
+                height="1570"
+              />
               <div className="identity-copy">
                 <small>GRAPHIC DESIGNER</small>
                 <strong>Dimas<br />Riyanto</strong>

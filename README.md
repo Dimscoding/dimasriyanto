@@ -2,7 +2,7 @@
 
 Website portofolio personal untuk graphic designer dengan fokus pada desain percetakan, visual digital, dan creative workflow berbasis AI. Project ini sudah menggunakan Next.js standar dan siap disimpan di GitHub lalu di-deploy melalui Vercel.
 
-Versi terbaru mencakup opening animation sekitar 8 detik dengan tombol skip, kinetic typography, hero dengan motion bergaya organic glow, indikator persentase scroll, preview CV, custom cursor, serta galeri karya dan dokumentasi yang responsif di desktop maupun handphone.
+Versi terbaru mencakup opening animation sekitar 8 detik dengan tombol skip, kinetic typography, hero dengan foto profil di kartu Creative ID, indikator persentase scroll, preview CV, custom cursor, serta galeri karya dan dokumentasi yang responsif di desktop maupun handphone.
 
 Tipografi memakai Christmas Comeback untuk heading, Syne Variable untuk elemen antarmuka, dan Space Grotesk Variable untuk paragraf. Font heading serta CV sudah disimpan di folder `public/` agar tampil konsisten di semua perangkat.
 
