@@ -47,6 +47,17 @@ type Gallery = {
   title: string;
   description: string;
   items: GalleryItem[];
+  feature?: {
+    label: string;
+    title: string;
+    href: string;
+  };
+};
+
+const thesis = {
+  label: "Undergraduate Thesis",
+  title: "Motif Sosial Generasi Z dalam Mengikuti Kajian Ta’limul Fiqh Habib Hasan Alaydrus Melalui Organisasi Risulthan",
+  href: "https://etheses.uinmataram.ac.id/10985/",
 };
 
 const galleries: Record<GalleryKey, Gallery> = {
@@ -109,12 +120,13 @@ const galleries: Record<GalleryKey, Gallery> = {
   },
   uin: {
     eyebrow: "Education Documentation",
-    title: "UIN Mataram, 2021-2025.",
-    description: "Momen perjalanan pendidikan S1 Sosiologi Agama di UIN Mataram.",
+    title: "UIN Mataram.",
+    description: "S1 Sosiologi Agama · 2021–2025. Momen perjalanan pendidikan dan kelulusan di UIN Mataram.",
     items: [
       { src: "/assets/galleries/journey/uin-01.webp", title: "Graduation Moment", alt: "Dokumentasi momen kelulusan di UIN Mataram" },
-      { src: "/assets/galleries/journey/uin-02.webp", title: "UIN Mataram", alt: "Dokumentasi pendidikan Dimas Riyanto di UIN Mataram" },
+      { src: "/assets/galleries/journey/uin-02.webp", title: "Wisuda ke-51", alt: "Dokumentasi Wisuda ke-51 UIN Mataram" },
     ],
+    feature: thesis,
   },
 };
 
@@ -128,6 +140,7 @@ const journey = [
     points: ["Banner & paper", "Merchandise", "Acrylic design"],
     href: "",
     gallery: undefined,
+    thesis: undefined,
   },
   {
     number: "02",
@@ -138,6 +151,7 @@ const journey = [
     points: ["Social media", "Communication", "Team coordination"],
     href: "",
     gallery: undefined,
+    thesis: undefined,
   },
   {
     number: "03",
@@ -148,6 +162,7 @@ const journey = [
     points: ["Article writing", "Digital literacy", "Web publishing"],
     href: "https://desararangbatas.web.id/artikel/2024/07/18/digitalisasi-desa-pelatihan-peningkatan-kualitas-pelayanan-publik",
     gallery: "digitalWriter" as GalleryKey,
+    thesis: undefined,
   },
   {
     number: "04",
@@ -158,6 +173,7 @@ const journey = [
     points: ["Academic banners", "Event flyers", "Visual communication"],
     href: "",
     gallery: "uin" as GalleryKey,
+    thesis,
   },
 ];
 
@@ -453,6 +469,13 @@ export default function Home() {
                 <span>{currentGallery.eyebrow}</span>
                 <h2 id="gallery-modal-title">{displayHeading(currentGallery.title)}</h2>
                 <p>{currentGallery.description}</p>
+                {currentGallery.feature && (
+                  <a className="gallery-feature" href={currentGallery.feature.href} target="_blank" rel="noreferrer">
+                    <span>{currentGallery.feature.label}</span>
+                    <strong>{currentGallery.feature.title}</strong>
+                    <small>Read Thesis <ArrowUpRight size={15} /></small>
+                  </a>
+                )}
               </div>
               <button onClick={closeGallery} aria-label="Tutup galeri"><X /></button>
             </div>
@@ -667,6 +690,13 @@ export default function Home() {
                       <button className="journey-gallery-link" onClick={() => openGallery(item.gallery)}>
                         <Images size={16} /> View Documentation
                       </button>
+                    )}
+                    {item.thesis && (
+                      <a className="journey-thesis" href={item.thesis.href} target="_blank" rel="noreferrer">
+                        <small>{item.thesis.label}</small>
+                        <span>{item.thesis.title}</span>
+                        <b>Read Thesis <ArrowUpRight size={14} /></b>
+                      </a>
                     )}
                   </div>
                   <ul>

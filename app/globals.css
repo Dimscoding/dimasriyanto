@@ -113,6 +113,11 @@ h1, h2, h3, .boxed-title { font-family: var(--font-display); font-weight: 400; }
 .gallery-modal-head span { color: var(--lime); font-size: 10px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
 .gallery-modal-head h2 { margin: 5px 0 4px; font-size: clamp(30px, 3.5vw, 44px); line-height: 1; }
 .gallery-modal-head p { margin: 0; color: #aeb6aa; font-size: 14px; line-height: 1.55; }
+.gallery-feature { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 8px 13px; margin-top: 12px; border: 1px solid rgba(184,255,0,.25); border-radius: 11px; padding: 10px 12px; background: rgba(184,255,0,.055); color: var(--white); text-decoration: none; transition: border-color .2s ease, background .2s ease; }
+.gallery-feature:hover { border-color: var(--lime); background: rgba(184,255,0,.1); }
+.gallery-feature > span { white-space: nowrap; }
+.gallery-feature > strong { min-width: 0; font-family: var(--font-body); font-size: 12px; font-weight: 650; line-height: 1.4; }
+.gallery-feature > small { display: flex; align-items: center; gap: 5px; color: var(--lime); font-size: 10px; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
 .gallery-modal-head > button { flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.04); cursor: pointer; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
 .gallery-modal-head > button:hover { border-color: var(--lime); background: rgba(184,255,0,.1); transform: rotate(4deg); }
 .gallery-stage { position: relative; min-height: 0; display: grid; grid-template-columns: 56px minmax(0,1fr) 56px; align-items: center; gap: 14px; padding: 18px 20px; background: radial-gradient(circle at 50% 45%, rgba(184,255,0,.08), transparent 45%), #11140f; }
@@ -225,6 +230,11 @@ h1, h2, h3, .boxed-title { font-family: var(--font-display); font-weight: 400; }
 .journey-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .journey-gallery-link { display: inline-flex; align-items: center; gap: 7px; width: fit-content; margin-top: 11px; border: 1px solid rgba(184,255,0,.38); border-radius: 999px; padding: 8px 11px; background: rgba(184,255,0,.08); color: var(--lime); font-size: 11px; font-weight: 800; letter-spacing: .04em; cursor: pointer; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
 .journey-gallery-link:hover { border-color: var(--lime); background: rgba(184,255,0,.16); transform: translateY(-2px); }
+.journey-thesis { display: grid; gap: 5px; max-width: 610px; margin-top: 13px; border-left: 3px solid var(--lime); padding: 10px 12px; background: rgba(184,255,0,.055); color: var(--white); text-decoration: none; transition: background .2s ease, transform .2s ease; }
+.journey-thesis:hover { background: rgba(184,255,0,.1); transform: translateX(3px); }
+.journey-thesis small { color: var(--lime); font-size: 9px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+.journey-thesis span { font-size: 13px; font-weight: 650; line-height: 1.4; }
+.journey-thesis b { display: flex; align-items: center; gap: 5px; color: #cbd3c5; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
 .journey-card ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .journey-card li { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 7px 10px; color: #c0c6ba; font-size: 12px; }
 .journey-card li svg { color: var(--lime); }
@@ -377,6 +387,10 @@ footer button { display: flex; align-items: center; gap: 8px; border: 1px solid 
   .gallery-modal-head { padding: 16px; }
   .gallery-modal-head h2 { font-size: clamp(29px, 8vw, 38px); }
   .gallery-modal-head p { max-width: 42ch; font-size: 12px; }
+  .gallery-feature { grid-template-columns: minmax(0,1fr) auto; }
+  .gallery-feature > span { grid-column: 1; }
+  .gallery-feature > strong { grid-column: 1 / -1; grid-row: 2; }
+  .gallery-feature > small { grid-column: 2; grid-row: 1; }
   .gallery-stage { grid-template-columns: 42px minmax(0,1fr) 42px; gap: 6px; padding: 12px 8px; }
   .gallery-arrow { width: 38px; height: 38px; }
   .gallery-arrow svg { width: 19px; height: 19px; }

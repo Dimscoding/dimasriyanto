@@ -64,6 +64,7 @@ Untuk mengganti gambar folder proyek, masukkan file baru ke `public/assets/`, la
 - `public/assets/galleries/journey/` - dokumentasi Digital Content Writer, BNN Kota Mataram, dan UIN Mataram.
 
 Semua gambar galeri sudah diubah ke WebP dan dioptimalkan agar tetap tajam tanpa membuat halaman terlalu berat.
+Bagian Education juga menampilkan judul skripsi Dimas dan tombol menuju repository e-theses UIN Mataram.
 
 ## Form kontak WhatsApp
 
