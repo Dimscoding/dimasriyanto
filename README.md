@@ -2,9 +2,9 @@
 
 Website portofolio personal untuk graphic designer dengan fokus pada desain percetakan, visual digital, dan creative workflow berbasis AI. Project ini sudah menggunakan Next.js standar dan siap disimpan di GitHub lalu di-deploy melalui Vercel.
 
-Versi terbaru mencakup opening animation 0–100%, kinetic typography, hero dengan motion bergaya organic glow, serta indikator persentase scroll yang responsif di desktop dan handphone.
+Versi terbaru mencakup opening animation sekitar 8 detik dengan tombol skip, kinetic typography, hero dengan motion bergaya organic glow, indikator persentase scroll, preview CV, dan custom cursor yang responsif di desktop maupun handphone.
 
-Tipografi memakai Syne Variable untuk judul dan Space Grotesk Variable untuk teks antarmuka serta paragraf. Kedua font disimpan sebagai dependency project agar tampil konsisten di semua perangkat.
+Tipografi memakai Christmas Comeback untuk heading, Syne Variable untuk elemen antarmuka, dan Space Grotesk Variable untuk paragraf. Font heading serta CV sudah disimpan di folder `public/` agar tampil konsisten di semua perangkat.
 
 ## Menjalankan di komputer
 
@@ -52,6 +52,7 @@ Setelah terhubung, setiap perubahan yang di-push ke branch `main` akan otomatis 
 - `app/globals.css` — warna, layout, font, motion, dan tampilan mobile.
 - `app/layout.tsx` — judul serta deskripsi website untuk browser dan mesin pencari.
 - `public/assets/` — gambar proyek dan aset visual lainnya.
+- `public/fonts/` — font heading Christmas Comeback.
 
 Untuk mengganti gambar folder proyek, masukkan file baru ke `public/assets/`, lalu ubah alamat gambar pada `app/page.tsx`.
 

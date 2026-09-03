@@ -1,15 +1,16 @@
 "use client";
 
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUp,
+  ArrowUpRight,
   Bot,
-  Camera,
   Check,
   ChevronRight,
+  Download,
+  FileText,
   Layers3,
-  Mail,
   Menu,
   MonitorSmartphone,
   Palette,
@@ -20,6 +21,8 @@ import {
   WandSparkles,
   X,
 } from "lucide-react";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
+import { SiGmail } from "react-icons/si";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 const sections = ["home", "about", "journey", "projects", "contact"];
@@ -32,6 +35,7 @@ const journey = [
     label: "Digiprint Lombok · Jun 2025–Jun 2026",
     text: "Merancang dan memproduksi materi visual untuk kebutuhan cetak dan digital sambil berkolaborasi langsung dengan klien.",
     points: ["Banner & paper", "Merchandise", "Acrylic design"],
+    href: "",
   },
   {
     number: "02",
@@ -40,14 +44,16 @@ const journey = [
     label: "HMPS Sosiologi Agama · Jul 2023–Feb 2024",
     text: "Memimpin divisi media dan jaringan, mengelola komunikasi organisasi, konten sosial, serta relasi internal dan eksternal.",
     points: ["Social media", "Communication", "Team coordination"],
+    href: "",
   },
   {
     number: "03",
     icon: PenTool,
     title: "Digital Content Writer",
     label: "Rarang Batas Village Website · Jul–Aug 2024",
-    text: "Menulis dan mempublikasikan kegiatan KKP, termasuk program digitalisasi desa dan peningkatan pelayanan publik melalui OpenSID.",
+    text: "Article contribution published on Rarang Batas Village Website, membahas digitalisasi desa dan peningkatan kualitas pelayanan publik.",
     points: ["Article writing", "Digital literacy", "Web publishing"],
+    href: "https://desararangbatas.web.id/artikel/2024/07/18/digitalisasi-desa-pelatihan-peningkatan-kualitas-pelayanan-publik",
   },
   {
     number: "04",
@@ -56,6 +62,7 @@ const journey = [
     label: "UIN Mataram · 2021–2025",
     text: "Lulus S1 Sosiologi Agama sekaligus dipercaya membuat materi komunikasi visual untuk berbagai kegiatan akademik.",
     points: ["Academic banners", "Event flyers", "Visual communication"],
+    href: "",
   },
 ];
 
@@ -68,6 +75,10 @@ export default function Home() {
   const [introPhase, setIntroPhase] = useState<"loading" | "exit" | "done">("loading");
   const [introProgress, setIntroProgress] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [skipIntro, setSkipIntro] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
+  const cursorDotRef = useRef<HTMLDivElement>(null);
+  const cursorFollowerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -83,7 +94,7 @@ export default function Home() {
     let finishTimer: ReturnType<typeof setTimeout> | undefined;
 
     const animateIntro = (currentTime: number) => {
-      const progress = Math.min(100, ((currentTime - startTime) / 3000) * 100);
+      const progress = skipIntro ? 100 : Math.min(100, ((currentTime - startTime) / 8000) * 100);
       setIntroProgress(progress);
 
       if (progress < 100) {
@@ -103,6 +114,86 @@ export default function Home() {
       cancelAnimationFrame(animationFrame);
       if (finishTimer) clearTimeout(finishTimer);
       document.body.style.overflow = originalOverflow;
+    };
+  }, [skipIntro]);
+
+  useEffect(() => {
+    if (!cvOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setCvOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [cvOpen]);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+
+    if (coarsePointer) {
+      const addTouchRipple = (event: PointerEvent) => {
+        const ripple = document.createElement("span");
+        ripple.className = "touch-ripple";
+        ripple.style.left = `${event.clientX}px`;
+        ripple.style.top = `${event.clientY}px`;
+        document.body.appendChild(ripple);
+        window.setTimeout(() => ripple.remove(), 720);
+      };
+      window.addEventListener("pointerdown", addTouchRipple, { passive: true });
+      return () => window.removeEventListener("pointerdown", addTouchRipple);
+    }
+
+    if (reducedMotion) return;
+
+    const dot = cursorDotRef.current;
+    const follower = cursorFollowerRef.current;
+    if (!dot || !follower) return;
+
+    document.documentElement.classList.add("custom-cursor-enabled");
+    let targetX = -100;
+    let targetY = -100;
+    let currentX = -100;
+    let currentY = -100;
+    let frame = 0;
+
+    const moveCursor = (event: PointerEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+    };
+    const followCursor = () => {
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
+      follower.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      frame = requestAnimationFrame(followCursor);
+    };
+    const updateCursorState = (event: PointerEvent) => {
+      const target = event.target as Element | null;
+      follower.classList.toggle("is-active", Boolean(target?.closest("a, button, input, textarea, [role='button']")));
+    };
+    const clickDown = () => follower.classList.add("is-clicking");
+    const clickUp = () => follower.classList.remove("is-clicking");
+
+    window.addEventListener("pointermove", moveCursor, { passive: true });
+    window.addEventListener("pointerover", updateCursorState, { passive: true });
+    window.addEventListener("pointerdown", clickDown, { passive: true });
+    window.addEventListener("pointerup", clickUp, { passive: true });
+    frame = requestAnimationFrame(followCursor);
+
+    return () => {
+      document.documentElement.classList.remove("custom-cursor-enabled");
+      cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", moveCursor);
+      window.removeEventListener("pointerover", updateCursorState);
+      window.removeEventListener("pointerdown", clickDown);
+      window.removeEventListener("pointerup", clickUp);
     };
   }, []);
 
@@ -182,9 +273,9 @@ export default function Home() {
 
   const introStage = introProgress < 34 ? 0 : introProgress < 68 ? 1 : 2;
   const introMessages = [
-    { lead: "EVERYTHING STARTS", accent: "WITH AN IDEA." },
-    { lead: "PRINT. DIGITAL.", accent: "AI CREATIVE." },
-    { lead: "WELCOME TO", accent: "MY PORTFOLIO." },
+    { lead: "Everything Starts", accent: "With an Idea." },
+    { lead: "Print. Digital.", accent: "AI Creative." },
+    { lead: "Welcome to", accent: "My Portfolio." },
   ];
 
   return (
@@ -208,13 +299,37 @@ export default function Home() {
               <i style={{ width: `${introProgress}%` }} />
             </div>
           </div>
+          <button className="skip-intro" onClick={() => setSkipIntro(true)}>
+            Skip intro <ArrowUpRight size={15} />
+          </button>
         </div>
       )}
+
+      <div ref={cursorFollowerRef} className="cursor-follower" aria-hidden="true" />
+      <div ref={cursorDotRef} className="cursor-dot" aria-hidden="true" />
 
       <div className="scroll-progress" aria-hidden="true">
         <i style={{ transform: `scaleX(${scrollProgress / 100})` }} />
         <b>{String(Math.round(scrollProgress)).padStart(3, "0")}%</b>
       </div>
+
+      {cvOpen && (
+        <div className="cv-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && setCvOpen(false)}>
+          <section className="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
+            <div className="cv-modal-head">
+              <div><span>Curriculum Vitae</span><h2 id="cv-modal-title">Dimas Riyanto</h2></div>
+              <button onClick={() => setCvOpen(false)} aria-label="Tutup preview CV"><X /></button>
+            </div>
+            <div className="cv-viewer">
+              <iframe src="/assets/cv-dimas-riyanto-2026.pdf#view=FitH" title="CV Dimas Riyanto" />
+            </div>
+            <div className="cv-modal-actions">
+              <a href="/assets/cv-dimas-riyanto-2026.pdf" target="_blank" rel="noreferrer">Open PDF <ArrowUpRight size={17} /></a>
+              <a href="/assets/cv-dimas-riyanto-2026.pdf" download>Download CV <Download size={17} /></a>
+            </div>
+          </section>
+        </div>
+      )}
 
       <main className="site-shell">
       <div className="site-noise" aria-hidden="true" />
@@ -240,6 +355,9 @@ export default function Home() {
           <button className="available-chip" onClick={() => goTo("contact")}>
             <i /> Open for work
           </button>
+          <button className="cv-preview-button" onClick={() => setCvOpen(true)} aria-label="Preview CV Dimas Riyanto">
+            <FileText size={16} /> <span>CV</span>
+          </button>
           <button
             className="menu-button"
             onClick={() => setMenuOpen((open) => !open)}
@@ -256,9 +374,9 @@ export default function Home() {
           <div className="hero-content">
             <div className="section-tag"><Sparkles size={15} /> Everything starts with an idea</div>
             <h1>
-              TURNING
-              <span>IDEAS</span>
-              INTO <em>EXPERIENCES.</em>
+              Turning
+              <span>Ideas</span>
+              Into <em>Experiences.</em>
             </h1>
             <p className="hero-intro">
               Saya Dimas Riyanto—graphic designer dengan fondasi percetakan,
@@ -286,7 +404,7 @@ export default function Home() {
               <div className="identity-mark">DR<span>.</span></div>
               <div className="identity-copy">
                 <small>GRAPHIC DESIGNER</small>
-                <strong>DIMAS<br />RIYANTO</strong>
+                <strong>Dimas<br />Riyanto</strong>
                 <p>PRINT × DIGITAL × AI</p>
               </div>
               <div className="identity-dots"><i /><i /><i /></div>
@@ -309,14 +427,14 @@ export default function Home() {
       <section id="about" className="page-section dotted-section">
         <div className="section-inner reveal-block">
           <div className="section-heading">
-            <div className="boxed-title">ABOUT ME</div>
+            <div className="boxed-title">About Me</div>
             <span className="section-number">01 — PROFILE</span>
           </div>
 
           <div className="about-grid">
             <div className="about-statement">
-              <p className="redline">I CREATE VISUAL EXPERIENCES.</p>
-              <h2>GOOD DESIGN SHOULD LOOK SHARP—AND <em>WORK HARD.</em></h2>
+              <p className="redline">I Create Visual Experiences.</p>
+              <h2>Good Design Should Look Sharp—And <em>Work Hard.</em></h2>
             </div>
             <div className="about-copy card-frame">
               <p>
@@ -348,12 +466,12 @@ export default function Home() {
       <section id="journey" className="page-section dark-section">
         <div className="section-inner reveal-block">
           <div className="section-heading light-heading">
-            <div className="boxed-title lime-title">CREATIVE JOURNEY</div>
+            <div className="boxed-title lime-title">Creative Journey</div>
             <span className="section-number">02 — HOW I GROW</span>
           </div>
 
           <div className="journey-intro">
-            <h2>REAL EXPERIENCE.<br /><em>CREATIVE DIRECTION.</em></h2>
+            <h2>Real Experience.<br /><em>Creative Direction.</em></h2>
             <p>Perjalanan dari komunikasi, media, dan pendidikan menuju desain grafis yang dekat dengan kebutuhan nyata.</p>
           </div>
 
@@ -368,6 +486,11 @@ export default function Home() {
                     <span>{item.label}</span>
                     <h3>{item.title}</h3>
                     <p>{item.text}</p>
+                    {item.href && (
+                      <a className="journey-link" href={item.href} target="_blank" rel="noreferrer">
+                        Read Published Article <ArrowUpRight size={16} />
+                      </a>
+                    )}
                   </div>
                   <ul>
                     {item.points.map((point) => <li key={point}><Check size={14} /> {point}</li>)}
@@ -394,14 +517,14 @@ export default function Home() {
       <section id="projects" className="page-section projects-section">
         <div className="section-inner reveal-block">
           <div className="section-heading">
-            <div className="boxed-title">PROJECTS</div>
+            <div className="boxed-title">Projects</div>
             <span className="section-number">03 — SELECTED WORK</span>
           </div>
 
           <div className="projects-head">
             <div>
               <p className="redline">A growing visual archive</p>
-              <h2>PROJECTS BUILT<br />FROM REAL NEEDS.</h2>
+              <h2>Projects Built<br />From Real Needs.</h2>
             </div>
             <p>
               Tekan folder untuk melihat kelompok proyek. Karya asli dapat dimasukkan
@@ -430,25 +553,36 @@ export default function Home() {
               <span><strong>{folderOpen ? "CLOSE ARCHIVE" : "OPEN PROJECTS"}</strong><small>Click the folder</small></span>
             </button>
           </div>
+
+          <a className="featured-project" href="https://kasir-bcuts.vercel.app/" target="_blank" rel="noreferrer">
+            <div className="featured-project-icon"><MonitorSmartphone /></div>
+            <div className="featured-project-copy">
+              <span>AI-Assisted Web Development · Learning Project</span>
+              <h3>BCUTS Cashier Web App</h3>
+              <p>Dibangun sebagai proyek pembelajaran untuk memperdalam pengembangan website dengan bantuan AI.</p>
+              <div><b>Live Website</b><b>Member Access Only</b></div>
+            </div>
+            <div className="featured-project-cta">Visit Live Project <ArrowUpRight size={19} /></div>
+          </a>
         </div>
       </section>
 
       <section id="contact" className="page-section contact-section">
         <div className="section-inner reveal-block">
           <div className="section-heading">
-            <div className="boxed-title lime-title">CONTACT</div>
+            <div className="boxed-title lime-title">Contact</div>
             <span className="section-number">04 — LET&apos;S TALK</span>
           </div>
 
           <div className="contact-grid">
             <div className="contact-copy-block">
               <p className="redline">Have a project in mind?</p>
-              <h2>LET&apos;S MAKE<br /><em>SOMETHING<br />MEMORABLE.</em></h2>
+              <h2>Let&apos;s Make<br /><em>Something<br />Memorable.</em></h2>
               <p>Ceritakan kebutuhan desainmu—untuk percetakan, digital, branding, atau eksplorasi kreatif dengan AI.</p>
               <div className="social-preview" aria-label="Kanal kontak Dimas Riyanto">
-                <a href="mailto:dimsrynto09@gmail.com" aria-label="Kirim email ke Dimas" title="Email"><Mail size={21} /></a>
-                <a href="https://www.instagram.com/aaadimm09" target="_blank" rel="noreferrer" aria-label="Buka Instagram Dimas" title="Instagram"><Camera size={21} /></a>
-                <a href="https://wa.me/6281996993639" target="_blank" rel="noreferrer" aria-label="Hubungi Dimas melalui WhatsApp" title="WhatsApp"><Send size={21} /></a>
+                <a href="mailto:dimsrynto09@gmail.com" aria-label="Kirim email ke Dimas" title="Gmail"><SiGmail size={21} /></a>
+                <a href="https://www.instagram.com/aaadimm09" target="_blank" rel="noreferrer" aria-label="Buka Instagram Dimas" title="Instagram"><FaInstagram size={22} /></a>
+                <a href="https://wa.me/6281996993639" target="_blank" rel="noreferrer" aria-label="Hubungi Dimas melalui WhatsApp" title="WhatsApp"><FaWhatsapp size={23} /></a>
               </div>
               <div className="direct-contact">
                 <a href="mailto:dimsrynto09@gmail.com"><span>Email</span><b>dimsrynto09@gmail.com</b></a>
