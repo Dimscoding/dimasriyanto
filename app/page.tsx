@@ -433,7 +433,7 @@ export default function Home() {
         <div className="cv-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && setCvOpen(false)}>
           <section className="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
             <div className="cv-modal-head">
-              <div><span>Curriculum Vitae</span><h2 id="cv-modal-title">Dimas Riyanto</h2></div>
+              <div><span>Curriculum Vitae</span><h2 id="cv-modal-title">Dimas Riyanto<b className="name-degree">, S.Sos.</b></h2></div>
               <button onClick={() => setCvOpen(false)} aria-label="Tutup preview CV"><X /></button>
             </div>
             <div className="cv-viewer">
@@ -553,7 +553,7 @@ export default function Home() {
               Into <em>Experiences.</em>
             </h1>
             <p className="hero-intro">
-              Saya Dimas Riyanto—graphic designer dengan fondasi percetakan,
+              Saya Dimas Riyanto, S.Sos.—graphic designer dengan fondasi percetakan,
               perspektif digital, dan workflow kreatif berbasis AI.
             </p>
             <div className="hero-actions">
@@ -585,7 +585,7 @@ export default function Home() {
               />
               <div className="identity-copy">
                 <small>GRAPHIC DESIGNER</small>
-                <strong>Dimas<br />Riyanto</strong>
+                <strong>Dimas<br />Riyanto<b className="identity-degree">, S.Sos.</b></strong>
                 <p>PRINT × DIGITAL × AI</p>
               </div>
               <div className="identity-dots"><i /><i /><i /></div>
@@ -821,7 +821,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <div><span>DR.</span><p>Dimas Riyanto — Graphic Designer & AI Creative</p></div>
+        <div><span>DR.</span><p>Dimas Riyanto, S.Sos. — Graphic Designer & AI Creative</p></div>
         <button onClick={() => goTo("home")}>Back to top <ArrowUp size={17} /></button>
       </footer>
       </main>

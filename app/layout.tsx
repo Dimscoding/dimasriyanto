@@ -4,9 +4,9 @@ import "@fontsource-variable/syne";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Dimas Riyanto — Graphic Designer & AI Creative",
+  title: "Dimas Riyanto, S.Sos. — Graphic Designer & AI Creative",
   description:
-    "Portofolio Dimas Riyanto, graphic designer untuk percetakan, visual digital, dan creative workflow berbasis AI.",
+    "Portofolio Dimas Riyanto, S.Sos., graphic designer untuk percetakan, visual digital, dan creative workflow berbasis AI.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
