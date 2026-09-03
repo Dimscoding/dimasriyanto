@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import { Fragment, type FormEvent, useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUp,
@@ -16,16 +16,22 @@ import {
   Palette,
   PenTool,
   Printer,
-  Send,
   Sparkles,
   WandSparkles,
   X,
 } from "lucide-react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 const sections = ["home", "about", "journey", "projects", "contact"];
+
+const displayHeading = (text: string) =>
+  text.split("&").map((part, index) => (
+    <Fragment key={`${part}-${index}`}>
+      {index > 0 && <span className="heading-symbol">&amp;</span>}
+      {part}
+    </Fragment>
+  ));
 
 const journey = [
   {
@@ -71,7 +77,6 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [folderOpen, setFolderOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [introPhase, setIntroPhase] = useState<"loading" | "exit" | "done">("loading");
   const [introProgress, setIntroProgress] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -240,35 +245,27 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const supabase = getSupabaseBrowserClient();
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+    const whatsappMessage = [
+      "Halo Dimas, saya menghubungi dari website portfolio.",
+      "",
+      `Nama: ${name}`,
+      `Email: ${email}`,
+      "",
+      "Pesan:",
+      message,
+    ].join("\n");
+    const whatsappUrl = `https://wa.me/6281996993639?text=${encodeURIComponent(whatsappMessage)}`;
 
-    if (!supabase) {
-      setFormStatus("Koneksi Supabase belum ditemukan. Periksa Environment Variables di Vercel.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    setFormStatus("Mengirim pesan...");
-
-    const { error } = await supabase.from("contact_messages").insert({
-      name: String(formData.get("name") ?? "").trim(),
-      email: String(formData.get("email") ?? "").trim(),
-      message: String(formData.get("message") ?? "").trim(),
-    });
-
-    if (error) {
-      console.error("Supabase contact error:", error.message);
-      setFormStatus("Pesan belum berhasil dikirim. Silakan coba kembali beberapa saat lagi.");
-    } else {
-      form.reset();
-      setFormStatus("Pesan berhasil dikirim. Terima kasih sudah menghubungi saya!");
-    }
-
-    setIsSubmitting(false);
+    setFormStatus("Membuka WhatsApp dengan pesan yang sudah disiapkan...");
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    form.reset();
   };
 
   const introStage = introProgress < 34 ? 0 : introProgress < 68 ? 1 : 2;
@@ -484,7 +481,7 @@ export default function Home() {
                   <div className="journey-icon"><Icon size={28} /></div>
                   <div className="journey-main">
                     <span>{item.label}</span>
-                    <h3>{item.title}</h3>
+                    <h3>{displayHeading(item.title)}</h3>
                     <p>{item.text}</p>
                     {item.href && (
                       <a className="journey-link" href={item.href} target="_blank" rel="noreferrer">
@@ -534,10 +531,10 @@ export default function Home() {
 
           <div className={folderOpen ? "archive is-open" : "archive"}>
             <div className="archive-card archive-print">
-              <div><Printer /><span>01</span></div><h3>Print & Production</h3><p>Banner, packaging, sticker, menu, dan kebutuhan promosi.</p>
+              <div><Printer /><span>01</span></div><h3>Print <span className="heading-symbol">&amp;</span> Production</h3><p>Banner, packaging, sticker, menu, dan kebutuhan promosi.</p>
             </div>
             <div className="archive-card archive-brand">
-              <div><Palette /><span>02</span></div><h3>Brand & Social</h3><p>Identitas visual, konten sosial, dan campaign design.</p>
+              <div><Palette /><span>02</span></div><h3>Brand <span className="heading-symbol">&amp;</span> Social</h3><p>Identitas visual, konten sosial, dan campaign design.</p>
             </div>
             <div className="archive-card archive-ai">
               <div><Bot /><span>03</span></div><h3>AI Exploration</h3><p>Generative image, visual concept, dan smart workflow.</p>
@@ -604,8 +601,8 @@ export default function Home() {
                 Your message
                 <textarea name="message" placeholder="Ceritakan proyek yang ingin dibuat..." rows={6} required />
               </label>
-              <button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send message"} <Send size={19} />
+              <button type="submit">
+                Send via WhatsApp <FaWhatsapp size={21} />
               </button>
               {formStatus && <p className="form-status" role="status">{formStatus}</p>}
             </form>

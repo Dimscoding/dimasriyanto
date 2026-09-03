@@ -34,6 +34,7 @@ body { margin: 0; overflow-x: hidden; background: var(--ink); color: var(--white
 button, input, textarea { font: inherit; }
 button { color: inherit; }
 h1, h2, h3, .boxed-title { font-family: var(--font-display); font-weight: 400; }
+.heading-symbol { font-family: var(--font-ui); font-size: .78em; font-weight: 800; font-style: normal; letter-spacing: 0; }
 
 .intro-overlay { position: fixed; z-index: 500; inset: 0; display: grid; place-items: center; overflow: hidden; background: radial-gradient(circle at 52% 45%, #113f22 0, #071b10 31%, #030604 72%); transition: clip-path .85s cubic-bezier(.7,0,.15,1), visibility .85s; clip-path: inset(0 0 0 0); }
 .intro-overlay.is-exiting { clip-path: inset(0 0 100% 0); visibility: hidden; }

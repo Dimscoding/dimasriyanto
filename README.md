@@ -56,16 +56,9 @@ Setelah terhubung, setiap perubahan yang di-push ke branch `main` akan otomatis 
 
 Untuk mengganti gambar folder proyek, masukkan file baru ke `public/assets/`, lalu ubah alamat gambar pada `app/page.tsx`.
 
-## Form kontak Supabase
+## Form kontak WhatsApp
 
-Form kontak menyimpan pesan ke tabel `contact_messages` di Supabase. Tambahkan kedua Environment Variables berikut di Vercel untuk Production, Preview, dan Development:
-
-```text
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-```
-
-Kode juga mendukung nama key lama `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Jangan pernah menggunakan secret key atau service-role key di variabel yang memakai awalan `NEXT_PUBLIC_`.
+Form kontak langsung membuka chat WhatsApp Dimas dengan nama, email, dan isi pesan yang sudah tersusun otomatis. Fitur ini tidak memerlukan Environment Variables atau konfigurasi Supabase.
 
 ## Build production
 
