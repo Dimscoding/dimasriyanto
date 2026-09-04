@@ -2,9 +2,9 @@
 
 Website portofolio personal untuk graphic designer dengan fokus pada desain percetakan, visual digital, dan creative workflow berbasis AI. Project ini sudah menggunakan Next.js standar dan siap disimpan di GitHub lalu di-deploy melalui Vercel.
 
-Versi terbaru mencakup opening animation sekitar 8 detik dengan tombol skip, kinetic typography, hero dengan foto profil di kartu Creative ID, indikator persentase scroll, preview CV, custom cursor, serta galeri karya dan dokumentasi yang responsif di desktop maupun handphone.
+Versi terbaru mencakup opening animation 3D sekitar 8 detik dengan tombol skip, kartu transparan dan organic glow, elemen blur-gradient yang bergerak saat setiap bagian memasuki layar, hero dengan foto profil di kartu Creative ID, indikator persentase scroll, preview CV, custom cursor, serta galeri karya dan dokumentasi yang responsif di desktop maupun handphone.
 
-Tipografi memakai Christmas Comeback untuk heading, Syne Variable untuk elemen antarmuka, dan Space Grotesk Variable untuk paragraf. Font heading serta CV sudah disimpan di folder `public/` agar tampil konsisten di semua perangkat.
+Tipografi memakai Times New Roman untuk heading editorial, Metropolis Bold untuk teks utama, dan Geist Pixel Variable untuk navigasi, label, angka, serta aksen digital. File Metropolis dan Geist Pixel tersimpan di folder `public/fonts/` agar tampil konsisten di semua perangkat.
 
 ## Menjalankan di komputer
 
@@ -52,7 +52,7 @@ Setelah terhubung, setiap perubahan yang di-push ke branch `main` akan otomatis 
 - `app/globals.css` — warna, layout, font, motion, dan tampilan mobile.
 - `app/layout.tsx` — judul serta deskripsi website untuk browser dan mesin pencari.
 - `public/assets/` — gambar proyek dan aset visual lainnya.
-- `public/fonts/` — font heading Christmas Comeback.
+- `public/fonts/` — file Metropolis Bold dan Geist Pixel Variable.
 
 Untuk mengganti gambar folder proyek, masukkan file baru ke `public/assets/`, lalu ubah alamat gambar pada `app/page.tsx`.
 

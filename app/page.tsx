@@ -386,25 +386,32 @@ export default function Home() {
     form.reset();
   };
 
-  const introStage = introProgress < 34 ? 0 : introProgress < 68 ? 1 : 2;
-  const introMessages = [
-    { lead: "Everything Starts", accent: "With an Idea." },
-    { lead: "Print. Digital.", accent: "AI Creative." },
-    { lead: "Welcome to", accent: "My Portfolio." },
-  ];
   const currentGallery = activeGallery ? galleries[activeGallery] : null;
 
   return (
     <>
       {introPhase !== "done" && (
         <div className={`intro-overlay ${introPhase === "exit" ? "is-exiting" : ""}`}>
-          <div className="intro-aurora intro-aurora-one" />
-          <div className="intro-aurora intro-aurora-two" />
-          <div className="intro-orbit intro-orbit-one"><i /></div>
-          <div className="intro-orbit intro-orbit-two"><i /></div>
-          <div className="intro-message" key={introStage}>
-            <span>{introMessages[introStage].lead}</span>
-            <strong>{introMessages[introStage].accent}</strong>
+          <div className="intro-haze intro-haze-one" />
+          <div className="intro-haze intro-haze-two" />
+          <div className="intro-scene" aria-hidden="true">
+            <div className="intro-membrane" />
+            <div className="intro-deck">
+              <div className="intro-card intro-card-left"><span>PRINT</span><i>01</i></div>
+              <div className="intro-card intro-card-center">
+                <small>CREATIVE ID</small>
+                <strong>DR</strong>
+                <b>IDEAS INTO IMPACT</b>
+              </div>
+              <div className="intro-card intro-card-right"><span>DIGITAL × AI</span><i>03</i></div>
+            </div>
+            <div className="intro-energy-ring" />
+            <div className="intro-horizon" />
+          </div>
+          <div className="intro-brand-reveal">
+            <span>Welcome To My Portfolio</span>
+            <strong>Dimas Riyanto, S.Sos.</strong>
+            <small>Graphic Designer · Print · Digital · AI</small>
           </div>
           <div className="intro-loader">
             <div className="intro-loader-meta">
@@ -544,6 +551,7 @@ export default function Home() {
       </header>
 
       <section id="home" className="page-section hero-section is-visible">
+        <div className="section-gradient gradient-home" aria-hidden="true" />
         <div className="hero-grid section-inner reveal-block">
           <div className="hero-content">
             <div className="section-tag"><Sparkles size={15} /> Everything starts with an idea</div>
@@ -606,6 +614,7 @@ export default function Home() {
       </section>
 
       <section id="about" className="page-section dotted-section">
+        <div className="section-gradient gradient-about" aria-hidden="true" />
         <div className="section-inner reveal-block">
           <div className="section-heading">
             <div className="boxed-title">About Me</div>
@@ -650,6 +659,7 @@ export default function Home() {
       </section>
 
       <section id="journey" className="page-section dark-section">
+        <div className="section-gradient gradient-journey" aria-hidden="true" />
         <div className="section-inner reveal-block">
           <div className="section-heading light-heading">
             <div className="boxed-title lime-title">Creative Journey</div>
@@ -713,6 +723,7 @@ export default function Home() {
       </section>
 
       <section id="projects" className="page-section projects-section">
+        <div className="section-gradient gradient-projects" aria-hidden="true" />
         <div className="section-inner reveal-block">
           <div className="section-heading">
             <div className="boxed-title">Projects</div>
@@ -775,6 +786,7 @@ export default function Home() {
       </section>
 
       <section id="contact" className="page-section contact-section">
+        <div className="section-gradient gradient-contact" aria-hidden="true" />
         <div className="section-inner reveal-block">
           <div className="section-heading">
             <div className="boxed-title lime-title">Contact</div>
