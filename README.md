@@ -2,7 +2,7 @@
 
 Website portofolio personal untuk graphic designer dengan fokus pada desain percetakan, visual digital, dan creative workflow berbasis AI. Project ini sudah menggunakan Next.js standar dan siap disimpan di GitHub lalu di-deploy melalui Vercel.
 
-Versi terbaru mencakup opening animation 3D sekitar 8 detik dengan tombol skip, kartu transparan dan organic glow, elemen blur-gradient yang bergerak saat setiap bagian memasuki layar, hero dengan foto profil di kartu Creative ID, indikator persentase scroll, preview CV, custom cursor, serta galeri karya dan dokumentasi yang responsif di desktop maupun handphone.
+Versi terbaru mencakup opening animation 3D sekitar 8 detik dengan tombol skip, kartu transparan dan organic glow, elemen blur-gradient yang bergerak saat setiap bagian memasuki layar, hero dengan foto profil di kartu Creative ID, indikator persentase scroll, preview CV, custom cursor, galeri karya, layar nama pengunjung, penghitung unique visitor, serta layout mobile yang responsif.
 
 Tipografi memakai Times New Roman untuk heading editorial, Metropolis Bold untuk teks utama, dan Geist Pixel Variable untuk navigasi, label, angka, serta aksen digital. File Metropolis dan Geist Pixel tersimpan di folder `public/fonts/` agar tampil konsisten di semua perangkat.
 
@@ -69,6 +69,15 @@ Kotak Education pada bagian About membuka dokumentasi UIN Mataram, menampilkan j
 ## Form kontak WhatsApp
 
 Form kontak langsung membuka chat WhatsApp Dimas dengan nama, email, dan isi pesan yang sudah tersusun otomatis. Fitur ini tidak memerlukan Environment Variables atau konfigurasi Supabase.
+
+## Nama dan unique visitor
+
+1. Buka Supabase → SQL Editor.
+2. Jalankan seluruh isi `supabase/visitor_registry.sql` satu kali.
+3. Pastikan Vercel memiliki `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (atau `NEXT_PUBLIC_SUPABASE_ANON_KEY`).
+4. Daftar nama hanya dapat dilihat owner melalui tabel `portfolio_visitors` di Supabase Table Editor.
+
+Setiap browser memperoleh satu ID anonim yang disimpan pada perangkat. Refresh dan kunjungan ulang dari browser yang sama tidak menambah jumlah. Browser berbeda, mode incognito, atau data browser yang dihapus dapat dianggap sebagai perangkat baru karena website tidak menggunakan fingerprinting invasif.
 
 ## Build production
 

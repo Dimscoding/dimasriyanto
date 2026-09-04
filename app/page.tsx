@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, type FormEvent, useEffect, useRef, useState } from "react";
+import { Fragment, type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUp,
@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 const sections = ["home", "about", "journey", "projects", "contact"];
 
@@ -175,10 +176,76 @@ export default function Home() {
   const [cvOpen, setCvOpen] = useState(false);
   const [activeGallery, setActiveGallery] = useState<GalleryKey | null>(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [visitorState, setVisitorState] = useState<"checking" | "asking" | "ready">("checking");
+  const [visitorName, setVisitorName] = useState("");
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [visitorSubmitting, setVisitorSubmitting] = useState(false);
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorFollowerRef = useRef<HTMLDivElement>(null);
 
+  const registerVisitor = useCallback(async (deviceId: string, name: string) => {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+
+    const { data, error } = await supabase.rpc("register_portfolio_visitor", {
+      p_device_id: deviceId,
+      p_name: name,
+    });
+
+    if (error) {
+      console.warn("Visitor registration is temporarily unavailable.");
+      return;
+    }
+
+    const total = typeof data === "number" ? data : Number(data);
+    if (Number.isFinite(total)) setVisitorCount(total);
+  }, []);
+
   useEffect(() => {
+    const name = window.localStorage.getItem("dimas_portfolio_visitor_name")?.trim();
+    let deviceId = window.localStorage.getItem("dimas_portfolio_device_id");
+
+    if (!deviceId) {
+      deviceId = window.crypto.randomUUID();
+      window.localStorage.setItem("dimas_portfolio_device_id", deviceId);
+    }
+
+    if (name) {
+      setVisitorState("ready");
+      void registerVisitor(deviceId, name);
+    } else {
+      setVisitorState("asking");
+    }
+  }, [registerVisitor]);
+
+  useEffect(() => {
+    if (visitorState === "ready") return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [visitorState]);
+
+  const handleVisitorEntry = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const cleanName = visitorName.trim().replace(/\s+/g, " ").slice(0, 60);
+    if (cleanName.length < 2) return;
+
+    setVisitorSubmitting(true);
+    let deviceId = window.localStorage.getItem("dimas_portfolio_device_id");
+    if (!deviceId) {
+      deviceId = window.crypto.randomUUID();
+      window.localStorage.setItem("dimas_portfolio_device_id", deviceId);
+    }
+    window.localStorage.setItem("dimas_portfolio_visitor_name", cleanName);
+    await registerVisitor(deviceId, cleanName);
+    setVisitorSubmitting(false);
+    setVisitorState("ready");
+  };
+
+  useEffect(() => {
+    if (visitorState !== "ready") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setIntroProgress(100);
       setIntroPhase("done");
@@ -213,7 +280,7 @@ export default function Home() {
       if (finishTimer) clearTimeout(finishTimer);
       document.body.style.overflow = originalOverflow;
     };
-  }, [skipIntro]);
+  }, [skipIntro, visitorState]);
 
   useEffect(() => {
     if (!cvOpen && !activeGallery) return;
@@ -390,6 +457,38 @@ export default function Home() {
 
   return (
     <>
+      {visitorState !== "ready" && (
+        <div className="visitor-gate">
+          <div className="visitor-gate-glow" aria-hidden="true" />
+          {visitorState === "asking" ? (
+            <form className="visitor-gate-card" onSubmit={handleVisitorEntry}>
+              <span>Welcome to the portfolio</span>
+              <h1>Siapa nama kamu?</h1>
+              <p>Nama hanya digunakan agar Dimas mengetahui siapa yang pernah berkunjung. Nama tidak ditampilkan kepada pengunjung lain.</p>
+              <label htmlFor="visitor-name">Nama</label>
+              <input
+                id="visitor-name"
+                value={visitorName}
+                onChange={(event) => setVisitorName(event.target.value)}
+                type="text"
+                minLength={2}
+                maxLength={60}
+                autoComplete="name"
+                placeholder="Tulis nama kamu"
+                autoFocus
+                required
+              />
+              <button type="submit" disabled={visitorSubmitting || visitorName.trim().length < 2}>
+                {visitorSubmitting ? "Menyimpan..." : "Enter Portfolio"} <ArrowUpRight size={18} />
+              </button>
+              <small>Satu browser dihitung sebagai satu unique visitor.</small>
+            </form>
+          ) : (
+            <div className="visitor-gate-loading" aria-label="Menyiapkan portfolio"><i /></div>
+          )}
+        </div>
+      )}
+
       {introPhase !== "done" && (
         <div className={`intro-overlay ${introPhase === "exit" ? "is-exiting" : ""}`}>
           <div className="intro-haze intro-haze-one" />
@@ -837,6 +936,9 @@ export default function Home() {
 
       <footer>
         <div><span>DESIGN PORTFOLIO</span><p>Dimas Riyanto, S.Sos. — Graphic Designer & AI Creative</p></div>
+        {visitorCount !== null && (
+          <div className="visitor-total" aria-live="polite"><b>{visitorCount}</b><small>Unique Visitors</small></div>
+        )}
         <button onClick={() => goTo("home")}>Back to top <ArrowUp size={17} /></button>
       </footer>
       </main>
