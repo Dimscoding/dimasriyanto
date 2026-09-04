@@ -397,13 +397,16 @@ export default function Home() {
           <div className="intro-scene" aria-hidden="true">
             <div className="intro-membrane" />
             <div className="intro-deck">
-              <div className="intro-card intro-card-left"><span>PRINT</span><i>01</i></div>
               <div className="intro-card intro-card-center">
-                <small>CREATIVE ID</small>
-                <strong>DR</strong>
-                <b>IDEAS INTO IMPACT</b>
+                <div className="intro-card-meta"><small>PORTFOLIO 2026</small><i>01 — 03</i></div>
+                <strong>Graphic<br /><em>Designer</em></strong>
+                <b>IDEAS · VISUALS · IMPACT</b>
               </div>
-              <div className="intro-card intro-card-right"><span>DIGITAL × AI</span><i>03</i></div>
+            </div>
+            <div className="intro-service-chips">
+              <span>Print &amp; Production</span>
+              <span>Brand &amp; Digital</span>
+              <span>AI Creative</span>
             </div>
             <div className="intro-energy-ring" />
             <div className="intro-horizon" />
@@ -517,7 +520,7 @@ export default function Home() {
 
       <header className="navbar">
         <button className="brand" onClick={() => goTo("home")} aria-label="Kembali ke awal">
-          <span>DR</span><b>©26</b>
+          <span>GRAPHIC DESIGN</span><b>©26</b>
         </button>
 
         <nav className={menuOpen ? "nav-links is-open" : "nav-links"} aria-label="Navigasi utama">
@@ -583,7 +586,7 @@ export default function Home() {
               <div className="identity-head">
                 <span>CREATIVE ID</span><b>№ 001</b>
               </div>
-              <div className="identity-mark">DR<span>.</span></div>
+              <div className="identity-mark">DESIGN</div>
               <img
                 className="identity-photo"
                 src="/assets/dimas-profile.webp"
@@ -833,7 +836,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <div><span>DR.</span><p>Dimas Riyanto, S.Sos. — Graphic Designer & AI Creative</p></div>
+        <div><span>DESIGN PORTFOLIO</span><p>Dimas Riyanto, S.Sos. — Graphic Designer & AI Creative</p></div>
         <button onClick={() => goTo("home")}>Back to top <ArrowUp size={17} /></button>
       </footer>
       </main>
