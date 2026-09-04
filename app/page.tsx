@@ -227,7 +227,7 @@ export default function Home() {
     };
   }, [visitorState]);
 
-  const handleVisitorEntry = async (event: FormEvent<HTMLFormElement>) => {
+  const handleVisitorEntry = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const cleanName = visitorName.trim().replace(/\s+/g, " ").slice(0, 60);
     if (cleanName.length < 2) return;
@@ -239,9 +239,9 @@ export default function Home() {
       window.localStorage.setItem("dimas_portfolio_device_id", deviceId);
     }
     window.localStorage.setItem("dimas_portfolio_visitor_name", cleanName);
-    await registerVisitor(deviceId, cleanName);
-    setVisitorSubmitting(false);
+    void registerVisitor(deviceId, cleanName);
     setVisitorState("ready");
+    setVisitorSubmitting(false);
   };
 
   useEffect(() => {
@@ -254,17 +254,16 @@ export default function Home() {
 
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const startTime = performance.now();
-    let animationFrame = 0;
+    const startTime = Date.now();
+    let progressTimer: ReturnType<typeof setInterval> | undefined;
     let finishTimer: ReturnType<typeof setTimeout> | undefined;
 
-    const animateIntro = (currentTime: number) => {
-      const progress = skipIntro ? 100 : Math.min(100, ((currentTime - startTime) / 8000) * 100);
-      setIntroProgress(progress);
+    const updateIntro = () => {
+      const progress = skipIntro ? 100 : Math.min(100, ((Date.now() - startTime) / 8000) * 100);
+      setIntroProgress(Math.round(progress));
 
-      if (progress < 100) {
-        animationFrame = requestAnimationFrame(animateIntro);
-      } else {
+      if (progress >= 100) {
+        if (progressTimer) clearInterval(progressTimer);
         setIntroPhase("exit");
         finishTimer = setTimeout(() => {
           setIntroPhase("done");
@@ -273,10 +272,11 @@ export default function Home() {
       }
     };
 
-    animationFrame = requestAnimationFrame(animateIntro);
+    updateIntro();
+    if (!skipIntro) progressTimer = setInterval(updateIntro, 100);
 
     return () => {
-      cancelAnimationFrame(animationFrame);
+      if (progressTimer) clearInterval(progressTimer);
       if (finishTimer) clearTimeout(finishTimer);
       document.body.style.overflow = originalOverflow;
     };
