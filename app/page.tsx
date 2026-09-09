@@ -251,29 +251,32 @@ export default function Home() {
 
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const startTime = Date.now();
-    let progressTimer: ReturnType<typeof setInterval> | undefined;
+    const isCompactScreen = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+    const introDuration = isCompactScreen ? 4600 : 6000;
+    const startTime = performance.now();
+    let animationFrame = 0;
     let finishTimer: ReturnType<typeof setTimeout> | undefined;
 
-    const updateIntro = () => {
-      const progress = skipIntro ? 100 : Math.min(100, ((Date.now() - startTime) / 8000) * 100);
+    const updateIntro = (now: number) => {
+      const progress = skipIntro ? 100 : Math.min(100, ((now - startTime) / introDuration) * 100);
       setIntroProgress(Math.round(progress));
 
       if (progress >= 100) {
-        if (progressTimer) clearInterval(progressTimer);
         setIntroPhase("exit");
         finishTimer = setTimeout(() => {
           setIntroPhase("done");
           document.body.style.overflow = originalOverflow;
-        }, 850);
+        }, 650);
+        return;
       }
+
+      animationFrame = window.requestAnimationFrame(updateIntro);
     };
 
-    updateIntro();
-    if (!skipIntro) progressTimer = setInterval(updateIntro, 100);
+    animationFrame = window.requestAnimationFrame(updateIntro);
 
     return () => {
-      if (progressTimer) clearInterval(progressTimer);
+      window.cancelAnimationFrame(animationFrame);
       if (finishTimer) clearTimeout(finishTimer);
       document.body.style.overflow = originalOverflow;
     };
@@ -708,10 +711,10 @@ export default function Home() {
 
           <img
             className="hero-portrait"
-            src="/assets/dimas-profile.webp"
+            src="/assets/dimas-profile-2026.webp"
             alt="Dimas Riyanto, S.Sos."
-            width="900"
-            height="1570"
+            width="1024"
+            height="1536"
           />
           <div className="hero-nameplate">
             <span>Dimas Riyanto</span>
