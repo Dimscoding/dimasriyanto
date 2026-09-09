@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Fragment, type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import {
-  ArrowDownRight,
   ArrowUp,
   ArrowUpRight,
   Bot,
@@ -20,7 +19,6 @@ import {
   PenTool,
   Printer,
   Sparkles,
-  WandSparkles,
   X,
 } from "lucide-react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
@@ -72,12 +70,10 @@ const galleries: Record<GalleryKey, Gallery> = {
       { src: "/assets/galleries/print/plafon-pvc.webp", title: "PVC & Interior Promotion", alt: "Kumpulan desain banner promosi distributor plafon PVC" },
       { src: "/assets/galleries/print/academic-cover-tradisi.webp", title: "Tradisi - Academic Cover", alt: "Desain sampul akademik bertema tradisi Perang Api" },
       { src: "/assets/galleries/print/academic-cover-stratifikasi.webp", title: "Stratifikasi Sosial - Academic Cover", alt: "Desain sampul akademik bertema stratifikasi sosial" },
-      { src: "/assets/galleries/print/kajian-remaja-frame.webp", title: "Kajian Remaja Frame", alt: "Desain bingkai dokumentasi Kajian Remaja" },
       { src: "/assets/galleries/print/maulid-nabi-banner.webp", title: "Maulid Nabi Banner", alt: "Desain banner peringatan Maulid Nabi" },
       { src: "/assets/galleries/print/belia-chio-menu.webp", title: "Belia Chio Menu", alt: "Desain menu lipat Belia Chio" },
       { src: "/assets/galleries/print/graduation-banner.webp", title: "Graduation Celebration", alt: "Desain banner ucapan kelulusan" },
       { src: "/assets/galleries/print/wisuda-route.webp", title: "Wisuda Route Poster", alt: "Desain poster rute menuju lokasi wisuda" },
-      { src: "/assets/galleries/print/eid-mubarak-frame.webp", title: "Eid Mubarak Frame", alt: "Desain bingkai foto Idulfitri" },
     ],
   },
   brand: {
@@ -168,7 +164,7 @@ const journey = [
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [folderOpen, setFolderOpen] = useState(false);
+  const [folderOpen, setFolderOpen] = useState(true);
   const [formStatus, setFormStatus] = useState("");
   const [introPhase, setIntroPhase] = useState<"loading" | "exit" | "done">("loading");
   const [introProgress, setIntroProgress] = useState(0);
@@ -654,60 +650,72 @@ export default function Home() {
       </header>
 
       <section id="home" className="page-section hero-section is-visible">
-        <div className="section-gradient gradient-home" aria-hidden="true" />
-        <div className="hero-grid section-inner reveal-block">
-          <div className="hero-content">
-            <div className="section-tag"><Sparkles size={15} /> Everything starts with an idea</div>
-            <h1>
-              Turning
-              <span>Ideas</span>
-              Into <em>Experiences.</em>
-            </h1>
-            <p className="hero-intro">
-              Saya Dimas Riyanto, S.Sos.—graphic designer dengan fondasi percetakan,
-              perspektif digital, dan workflow kreatif berbasis AI.
-            </p>
-            <div className="hero-actions">
-              <button className="primary-button" onClick={() => goTo("projects")}>
-                Explore projects <ArrowDownRight size={19} />
-              </button>
-              <button className="text-button" onClick={() => goTo("about")}>
-                Get to know me <ChevronRight size={18} />
-              </button>
+        <div className="hero-backdrop-glow" aria-hidden="true" />
+        <div className="hero-kicker reveal-block">
+          <span>Dimas Riyanto, S.Sos.</span>
+          <b>Graphic Design Portfolio · 2026</b>
+        </div>
+        <div className="hero-wordmark" aria-hidden="true">PORTFOLIO</div>
+
+        <div className="hero-showcase section-inner reveal-block">
+          <div className="hero-panel hero-panel-dark">
+            <div className="hero-panel-brand">
+              <span>Graphic Designer</span>
+              <b>Print × Digital × AI</b>
+            </div>
+
+            <div className="hero-create-copy">
+              <span>Visuals with purpose</span>
+              <h1>CREATE</h1>
+              <p>Designs that communicate clearly.<br />Ideas built to become real.</p>
+              <div className="hero-actions">
+                <button className="primary-button" onClick={() => goTo("projects")}>
+                  View projects <ArrowUpRight size={18} />
+                </button>
+                <button className="text-button" onClick={() => goTo("about")}>
+                  About me <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+
+            <div className="hero-proof">
+              <div className="hero-proof-images" aria-hidden="true">
+                <img src="/assets/galleries/brand/tofu-fruit-campaign.webp" alt="" width="60" height="60" />
+                <img src="/assets/galleries/print/graduation-banner.webp" alt="" width="60" height="60" />
+                <img src="/assets/galleries/ai/coffee-series.webp" alt="" width="60" height="60" />
+                <span>+12</span>
+              </div>
+              <p>Selected work across print,<br />branding, and AI exploration.</p>
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="Identitas visual Dimas Riyanto">
-            <div className="hero-aurora hero-aurora-one" aria-hidden="true" />
-            <div className="hero-aurora hero-aurora-two" aria-hidden="true" />
-            <div className="orbit orbit-one" aria-hidden="true" />
-            <div className="orbit orbit-two" aria-hidden="true" />
-            <div className="identity-card">
-              <div className="identity-head">
-                <span>CREATIVE ID</span><b>№ 001</b>
-              </div>
-              <div className="identity-mark">DESIGN</div>
-              <img
-                className="identity-photo"
-                src="/assets/dimas-profile.webp"
-                alt="Dimas Riyanto"
-                width="900"
-                height="1570"
-              />
-              <div className="identity-copy">
-                <small>GRAPHIC DESIGNER</small>
-                <strong>Dimas<br />Riyanto<b className="identity-degree">, S.Sos.</b></strong>
-                <p>PRINT × DIGITAL × AI</p>
-              </div>
-              <div className="identity-dots"><i /><i /><i /></div>
+          <div className="hero-panel hero-panel-light">
+            <div className="hero-availability">
+              <span>Available for</span>
+              <strong>Creative<br />Projects</strong>
             </div>
-            <div className="float-tool tool-pen"><PenTool /></div>
-            <div className="float-tool tool-ai"><WandSparkles /></div>
-            <span className="float-label label-print">PRINT READY</span>
-            <span className="float-label label-ai">AI ENABLED</span>
-            <span className="motion-word word-idea">IDEA</span>
-            <span className="motion-word word-sketch">SKETCH</span>
-            <span className="motion-word word-impact">IMPACT</span>
+            <div className="hero-services">
+              <span>01 · Print Production</span>
+              <span>02 · Brand &amp; Social</span>
+              <span>03 · AI Creative</span>
+            </div>
+            <div className="hero-quote">
+              <b>“</b>
+              <p>Visual yang kuat bukan hanya menarik, tetapi juga bekerja untuk menyampaikan pesan.</p>
+              <span>Dimas Riyanto <small>S.Sos.</small></span>
+            </div>
+          </div>
+
+          <img
+            className="hero-portrait"
+            src="/assets/dimas-profile.webp"
+            alt="Dimas Riyanto, S.Sos."
+            width="900"
+            height="1570"
+          />
+          <div className="hero-nameplate">
+            <span>Dimas Riyanto</span>
+            <b>S.Sos.</b>
           </div>
         </div>
 
@@ -743,6 +751,10 @@ export default function Home() {
               </p>
               <div className="profile-facts">
                 <button className="education-fact" onClick={() => openGallery("uin")} aria-label="Buka dokumentasi pendidikan UIN Mataram">
+                  <span className="fact-preview" aria-hidden="true">
+                    <img src="/assets/galleries/journey/uin-01.webp" alt="" width="360" height="220" loading="lazy" />
+                    <img src="/assets/galleries/journey/uin-02.webp" alt="" width="360" height="220" loading="lazy" />
+                  </span>
                   <span>Education</span>
                   <b>S1 Sosiologi Agama</b>
                   <small>UIN Mataram · 2021–2025</small>
@@ -750,6 +762,10 @@ export default function Home() {
                 </button>
                 <div><span>Based in</span><b>Mataram, NTB</b><small>Available for creative work</small></div>
               </div>
+              <button className="cv-inline-preview" onClick={() => setCvOpen(true)} aria-label="Lihat preview CV Dimas Riyanto">
+                <img src="/assets/cv-dimas-riyanto-2026.webp" alt="Preview halaman pertama CV Dimas Riyanto" width="260" height="368" loading="lazy" />
+                <span><small>Curriculum Vitae</small><strong>Preview CV</strong><em>Open document <ArrowUpRight size={15} /></em></span>
+              </button>
             </div>
           </div>
 
@@ -791,8 +807,13 @@ export default function Home() {
                       </a>
                     )}
                     {item.gallery && (
-                      <button className="journey-gallery-link" onClick={() => openGallery(item.gallery)}>
-                        <Images size={16} /> View Documentation
+                      <button className="journey-documentation-preview" onClick={() => openGallery(item.gallery)}>
+                        <span className="journey-preview-images" aria-hidden="true">
+                          {galleries[item.gallery].items.slice(0, 2).map((preview) => (
+                            <img key={preview.src} src={preview.src} alt="" width="240" height="150" loading="lazy" />
+                          ))}
+                        </span>
+                        <span className="journey-preview-label"><Images size={16} /> View Documentation <ArrowUpRight size={14} /></span>
                       </button>
                     )}
                   </div>
@@ -817,8 +838,13 @@ export default function Home() {
               <span>OCT–NOV 2024</span>
               <strong>BNN Kota Mataram</strong>
               <p>Internship supporting public outreach, administration, and program documentation.</p>
-              <button className="journey-gallery-link" onClick={() => openGallery("bnn")}>
-                <Images size={16} /> View Documentation
+              <button className="journey-documentation-preview" onClick={() => openGallery("bnn")}>
+                <span className="journey-preview-images" aria-hidden="true">
+                  {galleries.bnn.items.slice(0, 2).map((preview) => (
+                    <img key={preview.src} src={preview.src} alt="" width="240" height="150" loading="lazy" />
+                  ))}
+                </span>
+                <span className="journey-preview-label"><Images size={16} /> View Documentation <ArrowUpRight size={14} /></span>
               </button>
             </article>
           </div>
@@ -846,18 +872,21 @@ export default function Home() {
 
           <div className={folderOpen ? "archive is-open" : "archive"}>
             <button className="archive-card archive-print" onClick={() => openGallery("print")} disabled={!folderOpen}>
-              <span className="archive-card-head"><Printer /><span>10 WORKS</span></span>
+              <span className="archive-card-preview"><img src="/assets/galleries/print/academic-cover-tradisi.webp" alt="Preview karya Print dan Production" width="420" height="240" loading="lazy" /></span>
+              <span className="archive-card-head"><Printer /><span>08 WORKS</span></span>
               <span className="archive-card-title">Print <span className="heading-symbol">&amp;</span> Production</span>
               <span className="archive-card-copy">Banner, publication, menu, dan kebutuhan promosi cetak.</span>
               <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
             </button>
             <button className="archive-card archive-brand" onClick={() => openGallery("brand")} disabled={!folderOpen}>
+              <span className="archive-card-preview"><img src="/assets/galleries/brand/tofu-fruit-campaign.webp" alt="Preview karya Brand dan Social" width="420" height="240" loading="lazy" /></span>
               <span className="archive-card-head"><Palette /><span>04 WORKS</span></span>
               <span className="archive-card-title">Brand <span className="heading-symbol">&amp;</span> Social</span>
               <span className="archive-card-copy">Identitas visual, konten sosial, dan campaign design.</span>
               <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
             </button>
             <button className="archive-card archive-ai" onClick={() => openGallery("ai")} disabled={!folderOpen}>
+              <span className="archive-card-preview"><img src="/assets/galleries/ai/coffee-series.webp" alt="Preview karya AI Exploration" width="420" height="240" loading="lazy" /></span>
               <span className="archive-card-head"><Bot /><span>04 WORKS</span></span>
               <span className="archive-card-title">AI Exploration</span>
               <span className="archive-card-copy">Product visual, creative compositing, dan AI-assisted workflow.</span>
