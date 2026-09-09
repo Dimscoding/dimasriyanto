@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Fragment, type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
@@ -874,16 +875,36 @@ export default function Home() {
             </button>
           </div>
 
-          <a className="featured-project" href="https://kasir-bcuts.vercel.app/" target="_blank" rel="noreferrer">
-            <div className="featured-project-icon"><MonitorSmartphone /></div>
-            <div className="featured-project-copy">
-              <span>AI-Assisted Web Development · Learning Project</span>
-              <h3>BCUTS Cashier Web App</h3>
-              <p>Dibangun sebagai proyek pembelajaran untuk memperdalam pengembangan website dengan bantuan AI.</p>
-              <div><b>Live Website</b><b>Member Access Only</b></div>
-            </div>
-            <div className="featured-project-cta">Visit Live Project <ArrowUpRight size={19} /></div>
-          </a>
+          <div className="web-projects">
+            <article className="featured-project stockflow-project">
+              <a className="stockflow-preview" href="https://stockflow-ims-nu.vercel.app/" target="_blank" rel="noreferrer" aria-label="Buka StockFlow Inventory OS">
+                <Image src="/assets/stockflow-dashboard.png" alt="Tampilan dashboard StockFlow Inventory OS" width={1920} height={1181} sizes="(max-width: 760px) 100vw, 390px" />
+                <span>Live dashboard <ArrowUpRight size={16} /></span>
+              </a>
+              <div className="featured-project-icon"><Layers3 /></div>
+              <div className="featured-project-copy">
+                <span>Inventory Management System · Full-Stack Portfolio Project</span>
+                <h3>StockFlow Inventory OS</h3>
+                <p>Sistem inventory HORECA untuk mengelola stok per item, transaksi, batch dan kedaluwarsa, FEFO, supplier, purchase order, stock opname, waste, serta laporan operasional.</p>
+                <div><b>Next.js</b><b>Responsive</b><b>Live Website</b></div>
+              </div>
+              <div className="featured-project-actions">
+                <a href="https://stockflow-ims-nu.vercel.app/" target="_blank" rel="noreferrer">Live Project <ArrowUpRight size={17} /></a>
+                <a href="https://github.com/Dimscoding/stockflow-ims" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={17} /></a>
+              </div>
+            </article>
+
+            <a className="featured-project" href="https://kasir-bcuts.vercel.app/" target="_blank" rel="noreferrer">
+              <div className="featured-project-icon"><MonitorSmartphone /></div>
+              <div className="featured-project-copy">
+                <span>AI-Assisted Web Development · Learning Project</span>
+                <h3>BCUTS Cashier Web App</h3>
+                <p>Dibangun sebagai proyek pembelajaran untuk memperdalam pengembangan website dengan bantuan AI.</p>
+                <div><b>Live Website</b><b>Member Access Only</b></div>
+              </div>
+              <div className="featured-project-cta">Visit Live Project <ArrowUpRight size={19} /></div>
+            </a>
+          </div>
         </div>
       </section>
 
