@@ -238,6 +238,44 @@ footer button { border-radius: 0; }
   footer { align-items: flex-start; gap: 24px; }
 }
 
+/* Desktop typography corrections. */
+@media (min-width: 761px) {
+  .hero-wordmark {
+    width: min(1180px, calc(100% - 80px));
+    margin: 54px auto 20px;
+    overflow: visible;
+    font-size: clamp(76px, 10vw, 150px);
+    line-height: 1;
+    letter-spacing: -.045em;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .intro-minimal-copy h1 {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 .18em;
+    max-width: 100%;
+    font-size: clamp(64px, 7vw, 106px);
+    line-height: .98;
+  }
+  .intro-minimal-copy h1 span {
+    display: inline;
+    margin: 0;
+    font-size: 1em;
+    line-height: inherit;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 760px) {
+  .intro-minimal-copy h1,
+  .intro-minimal-copy h1 span {
+    font-size: clamp(46px, 13vw, 60px);
+    line-height: .95;
+  }
+}
+
 /* Desktop cursor and corrected mobile hero composition. */
 @media (hover: hover) and (pointer: fine) {
   .cursor-dot, .cursor-follower { display: block !important; }
@@ -670,4 +708,23 @@ footer button { border-color: rgba(2,48,72,.24); color: var(--navy); }
 
 @media (prefers-reduced-motion: reduce) {
   .intro-scene { animation: none; }
+}
+
+/* Cascade-safe final typography rules. */
+@media (min-width: 761px) {
+  .hero-wordmark {
+    width: min(1180px, calc(100% - 80px));
+    margin: 54px auto 20px;
+    overflow: visible;
+    font-size: clamp(76px, 10vw, 150px);
+    line-height: 1;
+    letter-spacing: -.045em;
+    text-align: center;
+  }
+  .intro-minimal-copy h1 { font-size: clamp(64px, 7vw, 106px); line-height: .98; }
+  .intro-minimal-copy h1 span { display: inline; margin: 0; font-size: 1em; line-height: inherit; }
+}
+
+@media (max-width: 760px) {
+  .intro-minimal-copy h1 span { font-size: 1em; }
 }
