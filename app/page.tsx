@@ -487,41 +487,17 @@ export default function Home() {
 
       {introPhase !== "done" && (
         <div className={`intro-overlay ${introPhase === "exit" ? "is-exiting" : ""}`}>
-          <div className="intro-haze intro-haze-one" />
-          <div className="intro-haze intro-haze-two" />
-          <div className="intro-scene" aria-hidden="true">
-            <div className="intro-membrane" />
-            <div className="intro-deck">
-              <div className="intro-card intro-card-center">
-                <div className="intro-card-meta"><small>PORTFOLIO 2026</small><i>01 — 03</i></div>
-                <strong>Graphic<br /><em>Designer</em></strong>
-                <b>IDEAS · VISUALS · IMPACT</b>
-              </div>
+          <div className="intro-minimal">
+            <div className="intro-minimal-top"><span>Portfolio 2026</span><b>{String(Math.round(introProgress)).padStart(3, "0")}%</b></div>
+            <div className="intro-minimal-copy">
+              <small>Welcome to my portfolio</small>
+              <h1>Dimas Riyanto<span>, S.Sos.</span></h1>
+              <p>Graphic Designer · Print · Digital · AI</p>
             </div>
-            <div className="intro-service-chips">
-              <span>Print &amp; Production</span>
-              <span>Brand &amp; Digital</span>
-              <span>AI Creative</span>
-            </div>
-            <div className="intro-energy-ring" />
-            <div className="intro-horizon" />
-          </div>
-          <div className="intro-brand-reveal">
-            <span>Welcome To My Portfolio</span>
-            <strong>Dimas Riyanto, S.Sos.</strong>
-            <small>Graphic Designer · Print · Digital · AI</small>
-          </div>
-          <div className="intro-loader">
-            <div className="intro-loader-meta">
-              <span>Preparing creative experience</span>
-              <b>{String(Math.round(introProgress)).padStart(3, "0")}%</b>
-            </div>
-            <div className="intro-loader-track">
-              <i style={{ width: `${introProgress}%` }} />
-            </div>
+            <div className="intro-minimal-progress"><i style={{ transform: `scaleX(${introProgress / 100})` }} /></div>
           </div>
           <button className="skip-intro" onClick={() => setSkipIntro(true)}>
-            Skip intro <ArrowUpRight size={15} />
+            Skip <ArrowUpRight size={15} />
           </button>
         </div>
       )}
