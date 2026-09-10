@@ -728,3 +728,65 @@ footer button { border-color: rgba(2,48,72,.24); color: var(--navy); }
 @media (max-width: 760px) {
   .intro-minimal-copy h1 span { font-size: 1em; }
 }
+
+/* Monochrome cleanup: white surfaces with one navy accent only. */
+:root { --burgundy: #07364a; --red: #07364a; }
+.redline, .hero-wordmark, .hero-panel-brand span, .hero-create-copy > span,
+.intro-minimal-copy small, .intro-minimal-top b, .section-number,
+.journey-intro h2 em, .journey-main > span, .journey-link,
+.archive-card-open, .featured-project-copy > span, .featured-project-cta,
+.featured-project-actions a, .toolbelt-heading span, .additional-experience span,
+.contact-section .redline, .visitor-total b, footer span { color: var(--navy) !important; }
+.marquee, .intro-minimal-progress i, .scroll-progress i { background: var(--navy) !important; }
+.primary-button, .contact-form button, .featured-project-icon { background: var(--navy) !important; color: #fff !important; }
+.featured-project-copy b, .featured-project-actions a, .featured-project-cta {
+  border: 1px solid rgba(2,48,72,.35) !important;
+  background: #fff !important;
+  color: var(--navy) !important;
+}
+.featured-project-copy b { border-radius: 999px; padding: 7px 10px; }
+.hero-showcase, .archive-card, .featured-project, .contact-form { box-shadow: 0 10px 30px rgba(2,48,72,.06) !important; }
+
+@media (max-width: 760px) {
+  .hero-wordmark { display: none !important; }
+  .hero-section { padding-top: 34px; }
+  .hero-showcase { margin-top: 28px; }
+  .hero-panel-dark { min-height: 690px; padding: 25px 20px 330px; }
+  .hero-create-copy { margin-top: 26px; }
+  .hero-create-copy h1 { font-size: clamp(52px, 16vw, 68px); }
+  .hero-portrait { top: 375px; width: min(72%, 270px); height: 315px; }
+  .hero-nameplate { top: 610px; }
+  .hero-panel-light { padding: 30px 22px; }
+  .hero-availability strong { font-size: 34px; }
+
+  .intro-minimal { width: 100%; overflow: hidden; }
+  .intro-minimal-copy { width: 100%; padding: 22vh 0; }
+  .intro-minimal-copy h1 {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-wrap: normal;
+    word-break: normal;
+    font-size: clamp(43px, 12vw, 54px);
+    line-height: .95;
+    letter-spacing: -.035em;
+  }
+  .intro-minimal-copy h1 span {
+    display: block;
+    width: 100%;
+    margin: 4px 0 0;
+    font-size: 1em;
+    line-height: inherit;
+    white-space: normal;
+  }
+  .intro-minimal-copy p { max-width: 22ch; font-size: 13px; }
+  .intro-minimal-top { padding-right: 58px; }
+
+  .featured-project, .stockflow-project { gap: 18px; }
+  .stockflow-preview { width: 100%; }
+  .featured-project-icon { width: 48px; height: 48px; }
+  .featured-project-copy > div { gap: 6px; }
+  .featured-project-copy b { font-size: 10px; }
+  .featured-project-actions a, .featured-project-cta { justify-content: center; width: 100%; padding: 13px; }
+}
