@@ -238,6 +238,67 @@ footer button { border-radius: 0; }
   footer { align-items: flex-start; gap: 24px; }
 }
 
+/* Final simplification for the two problem areas. */
+.intro-overlay {
+  display: grid;
+  place-items: center;
+  padding: clamp(22px, 5vw, 64px);
+  background: #fff !important;
+  color: var(--navy);
+}
+.intro-overlay::before, .intro-overlay::after { display: none; }
+.intro-minimal { width: min(920px, 100%); }
+.intro-minimal-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(2,48,72,.2); padding-bottom: 14px; color: #687176; font: 700 12px/1 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; }
+.intro-minimal-top b { color: var(--burgundy); font-variant-numeric: tabular-nums; }
+.intro-minimal-copy { padding-block: clamp(70px, 14vh, 150px); }
+.intro-minimal-copy small { display: block; margin-bottom: 18px; color: var(--burgundy); font: 700 12px/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; }
+.intro-minimal-copy h1 { max-width: 900px; margin: 0; color: var(--navy); font-family: "Times New Roman", Times, serif; font-size: clamp(56px, 9vw, 130px); font-weight: 400; line-height: .86; letter-spacing: -.035em; }
+.intro-minimal-copy h1 span { display: inline; color: var(--navy); font-size: .46em; white-space: nowrap; }
+.intro-minimal-copy p { margin: 25px 0 0; color: #596267; font-size: 16px; letter-spacing: .04em; }
+.intro-minimal-progress { height: 3px; overflow: hidden; background: rgba(2,48,72,.12); }
+.intro-minimal-progress i { display: block; width: 100%; height: 100%; background: var(--burgundy); transform-origin: left; transition: transform .12s linear; }
+.intro-overlay .skip-intro { position: absolute; top: clamp(22px,5vw,55px); right: clamp(22px,5vw,55px); border: 0; padding: 8px; background: transparent; color: var(--navy); }
+
+.dark-section { background: #fff !important; color: var(--navy) !important; }
+.toolbelt { display: block !important; background: #fff !important; color: var(--navy) !important; }
+.toolbelt > .toolbelt-heading { display: grid !important; grid-template-columns: .65fr 1.35fr; align-items: start; gap: 30px; }
+.toolbelt > .tool-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  background: transparent !important;
+}
+.tool-grid article {
+  display: grid !important;
+  grid-template-columns: 42px minmax(0,1fr) !important;
+  grid-template-rows: auto auto !important;
+  align-items: center !important;
+  min-height: 96px !important;
+  border: 1px solid rgba(2,48,72,.16) !important;
+  padding: 18px !important;
+  background: #fff !important;
+}
+.tool-grid article:hover { border-color: var(--burgundy) !important; background: #fafafa !important; }
+.tool-grid article b { grid-column: 2; padding: 0 !important; background: transparent !important; color: var(--navy) !important; font-size: 14px; }
+.tool-grid article small { grid-column: 2; color: #687176 !important; font-size: 11px; }
+.tool-grid article svg, .tool-grid .canva-mark, .tool-grid .chatgpt-mark { grid-column: 1; grid-row: 1 / 3; width: 27px; height: 27px; margin: 0; color: var(--burgundy); }
+
+@media (max-width: 900px) {
+  .toolbelt > .tool-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
+
+@media (max-width: 760px) {
+  .intro-overlay { padding: 24px 20px; }
+  .intro-minimal-copy { padding-block: 24vh; }
+  .intro-minimal-copy h1 { font-size: clamp(51px, 16vw, 72px); line-height: .9; }
+  .intro-minimal-copy h1 span { display: block; margin-top: 13px; font-size: .36em; }
+  .intro-minimal-copy p { max-width: 24ch; font-size: 14px; line-height: 1.55; }
+  .intro-overlay .skip-intro { top: 23px; right: 18px; }
+  .toolbelt > .toolbelt-heading { grid-template-columns: 1fr; gap: 8px; }
+  .toolbelt > .tool-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+  .tool-grid article { min-height: 76px !important; padding: 13px 15px !important; }
+}
+
 /* Mobile rebuild: keep every block in normal document flow. */
 @media (max-width: 760px) {
   html, body, .site-shell { width: 100%; max-width: 100%; overflow-x: clip; }
