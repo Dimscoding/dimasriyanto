@@ -790,3 +790,60 @@ footer button { border-color: rgba(2,48,72,.24); color: var(--navy); }
   .featured-project-copy b { font-size: 10px; }
   .featured-project-actions a, .featured-project-cta { justify-content: center; width: 100%; padding: 13px; }
 }
+
+/* Opening alignment and button contrast. */
+.stockflow-preview > span,
+.primary-button,
+.contact-form button,
+.menu-button {
+  color: #ffffff !important;
+}
+.stockflow-preview > span svg,
+.primary-button svg,
+.contact-form button svg { color: currentColor !important; }
+
+@media (max-width: 760px) {
+  .intro-minimal { display: grid; align-content: center; min-height: calc(100svh - 48px); }
+  .intro-minimal-top {
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    padding: 0 0 14px;
+    text-align: center;
+  }
+  .intro-minimal-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: clamp(70px, 15vh, 125px) 0;
+    text-align: center;
+  }
+  .intro-minimal-copy small { width: 100%; margin-bottom: 18px; text-align: center; }
+  .intro-minimal-copy h1 {
+    width: 100%;
+    max-width: 330px;
+    margin-inline: auto;
+    font-size: clamp(42px, 11.5vw, 52px);
+    line-height: .94;
+    text-align: center;
+  }
+  .intro-minimal-copy h1 span {
+    display: block;
+    width: 100%;
+    margin: 10px auto 0;
+    font-size: .7em;
+    line-height: 1;
+    text-align: center;
+  }
+  .intro-minimal-copy p {
+    max-width: 280px;
+    margin: 24px auto 0;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+  }
+  .intro-minimal-progress { width: 100%; }
+  .intro-overlay .skip-intro { top: 20px; right: 16px; }
+}
