@@ -162,7 +162,6 @@ const journey = [
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [folderOpen, setFolderOpen] = useState(true);
   const [formStatus, setFormStatus] = useState("");
   const [introPhase, setIntroPhase] = useState<"loading" | "exit" | "done">("loading");
   const [introProgress, setIntroProgress] = useState(0);
@@ -827,22 +826,22 @@ export default function Home() {
             </p>
           </div>
 
-          <div className={folderOpen ? "archive is-open" : "archive"}>
-            <button className="archive-card archive-print" onClick={() => openGallery("print")} disabled={!folderOpen}>
+          <div className="archive archive-static">
+            <button className="archive-card archive-print" onClick={() => openGallery("print")}>
               <span className="archive-card-preview"><img src="/assets/galleries/print/academic-cover-tradisi.webp" alt="Preview karya Print dan Production" width="420" height="240" loading="lazy" /></span>
               <span className="archive-card-head"><Printer /><span>08 WORKS</span></span>
               <span className="archive-card-title">Print <span className="heading-symbol">&amp;</span> Production</span>
               <span className="archive-card-copy">Banner, publication, menu, dan kebutuhan promosi cetak.</span>
               <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
             </button>
-            <button className="archive-card archive-brand" onClick={() => openGallery("brand")} disabled={!folderOpen}>
+            <button className="archive-card archive-brand" onClick={() => openGallery("brand")}>
               <span className="archive-card-preview"><img src="/assets/galleries/brand/tofu-fruit-campaign.webp" alt="Preview karya Brand dan Social" width="420" height="240" loading="lazy" /></span>
               <span className="archive-card-head"><Palette /><span>04 WORKS</span></span>
               <span className="archive-card-title">Brand <span className="heading-symbol">&amp;</span> Social</span>
               <span className="archive-card-copy">Identitas visual, konten sosial, dan campaign design.</span>
               <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
             </button>
-            <button className="archive-card archive-ai" onClick={() => openGallery("ai")} disabled={!folderOpen}>
+            <button className="archive-card archive-ai" onClick={() => openGallery("ai")}>
               <span className="archive-card-preview"><img src="/assets/galleries/ai/coffee-series.webp" alt="Preview karya AI Exploration" width="420" height="240" loading="lazy" /></span>
               <span className="archive-card-head"><Bot /><span>04 WORKS</span></span>
               <span className="archive-card-title">AI Exploration</span>
@@ -850,15 +849,6 @@ export default function Home() {
               <span className="archive-card-open">Open Gallery <ArrowUpRight size={14} /></span>
             </button>
 
-            <button
-              className="folder-button"
-              onClick={() => setFolderOpen((open) => !open)}
-              aria-expanded={folderOpen}
-              aria-label={folderOpen ? "Tutup folder proyek" : "Buka folder proyek"}
-            >
-              <img src="/assets/project-folder.webp" alt="Folder 3D kumpulan proyek desain" width="1280" height="853" />
-              <span><strong>{folderOpen ? "CLOSE ARCHIVE" : "OPEN PROJECTS"}</strong><small>Click the folder</small></span>
-            </button>
           </div>
 
           <div className="web-projects">
