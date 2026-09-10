@@ -238,6 +238,55 @@ footer button { border-radius: 0; }
   footer { align-items: flex-start; gap: 24px; }
 }
 
+/* Desktop cursor and corrected mobile hero composition. */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot, .cursor-follower { display: block !important; }
+  .cursor-dot { background: var(--burgundy); box-shadow: none; }
+  .cursor-follower { border-color: rgba(2,48,72,.42); background: rgba(2,48,72,.035); box-shadow: none; backdrop-filter: none; }
+  .cursor-follower.is-active { border-color: var(--burgundy); background: rgba(119,1,1,.06); }
+  .cursor-follower.is-clicking { background: rgba(119,1,1,.14); }
+}
+
+@media (max-width: 760px) {
+  .hero-wordmark {
+    display: block;
+    width: calc(100% - 28px);
+    max-width: none;
+    margin: 32px auto 16px;
+    overflow: visible;
+    font-size: clamp(46px, 15vw, 64px);
+    line-height: .9;
+    letter-spacing: -.045em;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .hero-panel-dark { min-height: 735px; padding-bottom: 355px; }
+  .hero-portrait {
+    top: 410px;
+    left: 50%;
+    width: min(78%, 285px);
+    height: 325px;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+  .hero-nameplate { top: 650px; left: 50%; padding: 10px 13px; }
+  .hero-nameplate span, .hero-nameplate b {
+    color: var(--navy) !important;
+    font-family: "Metropolis", Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+  }
+  .hero-panel-light { padding-top: 34px; }
+}
+
+@media (max-width: 380px) {
+  .hero-wordmark { font-size: 14.4vw; }
+  .hero-panel-dark { min-height: 700px; padding-bottom: 330px; }
+  .hero-portrait { top: 395px; width: 260px; height: 305px; }
+  .hero-nameplate { top: 620px; }
+}
+
 /* Projects are a direct gallery; the old neon folder is removed. */
 .archive.archive-static {
   display: grid;
