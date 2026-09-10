@@ -238,6 +238,64 @@ footer button { border-radius: 0; }
   footer { align-items: flex-start; gap: 24px; }
 }
 
+/* Projects are a direct gallery; the old neon folder is removed. */
+.archive.archive-static {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  width: min(100%, 1120px);
+  height: auto;
+  min-height: 0;
+  margin: 54px auto 0;
+  perspective: none;
+  transform: none;
+}
+.archive-static .archive-card,
+.archive-static .archive-print,
+.archive-static .archive-brand,
+.archive-static .archive-ai {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  min-height: 390px;
+  max-height: none;
+  padding: 15px;
+  opacity: 1;
+  transform: none;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.archive-static .archive-card:hover { border-color: var(--burgundy); transform: translateY(-5px); }
+
+/* One consistent type treatment for the full name and degree. */
+.hero-nameplate { gap: 4px; }
+.hero-nameplate span,
+.hero-nameplate b {
+  color: var(--navy);
+  font-family: "Metropolis", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+.intro-minimal-copy h1,
+.intro-minimal-copy h1 span {
+  color: var(--navy);
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .archive.archive-static { grid-template-columns: 1fr; gap: 14px; }
+  .archive-static .archive-card,
+  .archive-static .archive-print,
+  .archive-static .archive-brand,
+  .archive-static .archive-ai { min-height: 0; }
+}
+
+@media (max-width: 760px) {
+  .archive.archive-static { display: grid; min-height: 0 !important; margin-top: 34px; }
+  .hero-nameplate span, .hero-nameplate b { font-size: 12px; }
+}
+
 /* Final simplification for the two problem areas. */
 .intro-overlay {
   display: grid;
