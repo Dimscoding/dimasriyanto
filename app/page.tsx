@@ -9,8 +9,6 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Download,
-  FileText,
   Images,
   Layers3,
   Menu,
@@ -21,8 +19,8 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { FaInstagram, FaWhatsapp } from "react-icons/fa6";
-import { SiGmail } from "react-icons/si";
+import { FaFileExcel, FaFilePowerpoint, FaFileWord, FaInstagram, FaMicrosoft, FaWhatsapp } from "react-icons/fa6";
+import { SiClaude, SiCoreldraw, SiGmail } from "react-icons/si";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 const sections = ["home", "about", "journey", "projects", "contact"];
@@ -170,7 +168,6 @@ export default function Home() {
   const [introProgress, setIntroProgress] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [skipIntro, setSkipIntro] = useState(false);
-  const [cvOpen, setCvOpen] = useState(false);
   const [activeGallery, setActiveGallery] = useState<GalleryKey | null>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [visitorState, setVisitorState] = useState<"checking" | "asking" | "ready">("checking");
@@ -283,12 +280,11 @@ export default function Home() {
   }, [skipIntro, visitorState]);
 
   useEffect(() => {
-    if (!cvOpen && !activeGallery) return;
+    if (!activeGallery) return;
 
     const originalOverflow = document.body.style.overflow;
     const handleModalKeyboard = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setCvOpen(false);
         setActiveGallery(null);
       }
       if (!activeGallery) return;
@@ -308,7 +304,7 @@ export default function Home() {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleModalKeyboard);
     };
-  }, [cvOpen, activeGallery]);
+  }, [activeGallery]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -538,24 +534,6 @@ export default function Home() {
         <b>{String(Math.round(scrollProgress)).padStart(3, "0")}%</b>
       </div>
 
-      {cvOpen && (
-        <div className="cv-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && setCvOpen(false)}>
-          <section className="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
-            <div className="cv-modal-head">
-              <div><span>Curriculum Vitae</span><h2 id="cv-modal-title">Dimas Riyanto<b className="name-degree">, S.Sos.</b></h2></div>
-              <button onClick={() => setCvOpen(false)} aria-label="Tutup preview CV"><X /></button>
-            </div>
-            <div className="cv-viewer">
-              <iframe src="/assets/cv-dimas-riyanto-2026.pdf#view=FitH" title="CV Dimas Riyanto" />
-            </div>
-            <div className="cv-modal-actions">
-              <a href="/assets/cv-dimas-riyanto-2026.pdf" target="_blank" rel="noreferrer">Open PDF <ArrowUpRight size={17} /></a>
-              <a href="/assets/cv-dimas-riyanto-2026.pdf" download>Download CV <Download size={17} /></a>
-            </div>
-          </section>
-        </div>
-      )}
-
       {currentGallery && (
         <div className="gallery-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && closeGallery()}>
           <section className="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-modal-title">
@@ -637,9 +615,6 @@ export default function Home() {
         <div className="nav-actions">
           <button className="available-chip" onClick={() => goTo("contact")}>
             <i /> Open for work
-          </button>
-          <button className="cv-preview-button" onClick={() => setCvOpen(true)} aria-label="Preview CV Dimas Riyanto">
-            <FileText size={16} /> <span>CV</span>
           </button>
           <button
             className="menu-button"
@@ -765,10 +740,6 @@ export default function Home() {
                 </button>
                 <div><span>Based in</span><b>Mataram, NTB</b><small>Available for creative work</small></div>
               </div>
-              <button className="cv-inline-preview" onClick={() => setCvOpen(true)} aria-label="Lihat preview CV Dimas Riyanto">
-                <img src="/assets/cv-dimas-riyanto-2026.webp" alt="Preview halaman pertama CV Dimas Riyanto" width="260" height="368" loading="lazy" />
-                <span><small>Curriculum Vitae</small><strong>Preview CV</strong><em>Open document <ArrowUpRight size={15} /></em></span>
-              </button>
             </div>
           </div>
 
@@ -829,9 +800,16 @@ export default function Home() {
           </div>
 
           <div className="toolbelt">
-            <span>TOOLS & WORKFLOW</span>
-            <div>
-              <b>CorelDRAW</b><b>Canva</b><b>Microsoft Office</b><b>ChatGPT</b><b>AI Image Tools</b><b>Print Production</b>
+            <div className="toolbelt-heading"><span>Tools &amp; Workflow</span><p>Perangkat yang saya gunakan untuk desain, eksplorasi ide, dan administrasi ringan.</p></div>
+            <div className="tool-grid">
+              <article><SiCoreldraw /><b>CorelDRAW</b><small>Vector &amp; print</small></article>
+              <article><span className="canva-mark">C</span><b>Canva</b><small>Social design</small></article>
+              <article><span className="chatgpt-mark">◎</span><b>ChatGPT</b><small>Image generation</small></article>
+              <article><SiClaude /><b>Claude</b><small>Brainstorming</small></article>
+              <article><FaFileWord /><b>Word</b><small>Documents</small></article>
+              <article><FaFilePowerpoint /><b>PowerPoint</b><small>Presentation</small></article>
+              <article><FaFileExcel /><b>Excel</b><small>Basic admin</small></article>
+              <article><FaMicrosoft /><b>Microsoft Office</b><small>Office workflow</small></article>
             </div>
           </div>
 
