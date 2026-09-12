@@ -169,10 +169,7 @@ export default function Home() {
   const [skipIntro, setSkipIntro] = useState(false);
   const [activeGallery, setActiveGallery] = useState<GalleryKey | null>(null);
   const [activeImage, setActiveImage] = useState(0);
-  const [visitorState, setVisitorState] = useState<"checking" | "asking" | "ready">("checking");
-  const [visitorName, setVisitorName] = useState("");
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
-  const [visitorSubmitting, setVisitorSubmitting] = useState(false);
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorFollowerRef = useRef<HTMLDivElement>(null);
 
@@ -195,50 +192,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const name = window.localStorage.getItem("dimas_portfolio_visitor_name")?.trim();
     let deviceId = window.localStorage.getItem("dimas_portfolio_device_id");
 
     if (!deviceId) {
       deviceId = window.crypto.randomUUID();
       window.localStorage.setItem("dimas_portfolio_device_id", deviceId);
     }
-
-    if (name) {
-      setVisitorState("ready");
-      void registerVisitor(deviceId, name);
-    } else {
-      setVisitorState("asking");
-    }
+    const savedName = window.localStorage.getItem("dimas_portfolio_visitor_name")?.trim();
+    void registerVisitor(deviceId, savedName || "Anonymous Visitor");
   }, [registerVisitor]);
 
   useEffect(() => {
-    if (visitorState === "ready") return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [visitorState]);
-
-  const handleVisitorEntry = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const cleanName = visitorName.trim().replace(/\s+/g, " ").slice(0, 60);
-    if (cleanName.length < 2) return;
-
-    setVisitorSubmitting(true);
-    let deviceId = window.localStorage.getItem("dimas_portfolio_device_id");
-    if (!deviceId) {
-      deviceId = window.crypto.randomUUID();
-      window.localStorage.setItem("dimas_portfolio_device_id", deviceId);
-    }
-    window.localStorage.setItem("dimas_portfolio_visitor_name", cleanName);
-    void registerVisitor(deviceId, cleanName);
-    setVisitorState("ready");
-    setVisitorSubmitting(false);
-  };
-
-  useEffect(() => {
-    if (visitorState !== "ready") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setIntroProgress(100);
       setIntroPhase("done");
@@ -276,7 +240,7 @@ export default function Home() {
       if (finishTimer) clearTimeout(finishTimer);
       document.body.style.overflow = originalOverflow;
     };
-  }, [skipIntro, visitorState]);
+  }, [skipIntro]);
 
   useEffect(() => {
     if (!activeGallery) return;
@@ -452,38 +416,6 @@ export default function Home() {
 
   return (
     <>
-      {visitorState !== "ready" && (
-        <div className="visitor-gate">
-          <div className="visitor-gate-glow" aria-hidden="true" />
-          {visitorState === "asking" ? (
-            <form className="visitor-gate-card" onSubmit={handleVisitorEntry}>
-              <span>Welcome to the portfolio</span>
-              <h1>Siapa nama kamu?</h1>
-              <p>Nama hanya digunakan agar Dimas mengetahui siapa yang pernah berkunjung. Nama tidak ditampilkan kepada pengunjung lain.</p>
-              <label htmlFor="visitor-name">Nama</label>
-              <input
-                id="visitor-name"
-                value={visitorName}
-                onChange={(event) => setVisitorName(event.target.value)}
-                type="text"
-                minLength={2}
-                maxLength={60}
-                autoComplete="name"
-                placeholder="Tulis nama kamu"
-                autoFocus
-                required
-              />
-              <button type="submit" disabled={visitorSubmitting || visitorName.trim().length < 2}>
-                {visitorSubmitting ? "Menyimpan..." : "Enter Portfolio"} <ArrowUpRight size={18} />
-              </button>
-              <small>Satu browser dihitung sebagai satu unique visitor.</small>
-            </form>
-          ) : (
-            <div className="visitor-gate-loading" aria-label="Menyiapkan portfolio"><i /></div>
-          )}
-        </div>
-      )}
-
       {introPhase !== "done" && (
         <div className={`intro-overlay ${introPhase === "exit" ? "is-exiting" : ""}`}>
           <div className="intro-minimal">
