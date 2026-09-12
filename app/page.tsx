@@ -611,6 +611,7 @@ export default function Home() {
 
       <section id="about" className="page-section dotted-section">
         <div className="section-gradient gradient-about" aria-hidden="true" />
+        <div className="section-emblem emblem-about" aria-hidden="true"><PenTool /><span>Ideas into form</span></div>
         <div className="section-inner reveal-block">
           <div className="section-heading">
             <div className="boxed-title">About Me</div>
@@ -660,6 +661,7 @@ export default function Home() {
 
       <section id="journey" className="page-section dark-section">
         <div className="section-gradient gradient-journey" aria-hidden="true" />
+        <div className="section-emblem emblem-journey" aria-hidden="true"><Layers3 /><span>Experience archive</span></div>
         <div className="section-inner reveal-block">
           <div className="section-heading light-heading">
             <div className="boxed-title lime-title">Creative Journey</div>
@@ -741,6 +743,7 @@ export default function Home() {
 
       <section id="projects" className="page-section projects-section">
         <div className="section-gradient gradient-projects" aria-hidden="true" />
+        <div className="section-emblem emblem-projects" aria-hidden="true"><Palette /><span>Selected visuals</span></div>
         <div className="section-inner reveal-block">
           <div className="section-heading">
             <div className="boxed-title">Projects</div>
@@ -818,6 +821,7 @@ export default function Home() {
 
       <section id="contact" className="page-section contact-section">
         <div className="section-gradient gradient-contact" aria-hidden="true" />
+        <div className="section-emblem emblem-contact" aria-hidden="true"><Sparkles /><span>Start a project</span></div>
         <div className="section-inner reveal-block">
           <div className="section-heading">
             <div className="boxed-title lime-title">Contact</div>
